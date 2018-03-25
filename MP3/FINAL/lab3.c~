@@ -1,0 +1,267 @@
+/* lab3.c
+ * Austin Johnson 
+ * agjohns
+ * ECE 2230 Fall 2016
+ * MP2
+ *
+ *
+ * 
+ *
+ * Purpose: The purpose of this program is to be able to organize information in a 
+ *          doubly linked list. The user should be able to store, replace, access, 
+ *          and print information about socket records for an unsorted list and a 
+ *          sorted list.  
+ *
+ * Assumptions: I assume this program will work as long as the user inputs the correct 
+ *               commands - 1. Unsorted list commands: insert x, replace x, pushback, 
+ *                                                     erase x, popback, at x, front, 
+ *                                                     back, print, stats, sort and quit.
+ *                          2. Sorted list commands:   INSERT ID, LOOK ID, REMOVE ID, 
+ *                                                     UPDATE ID, PRINT, and quit.   
+ *
+ *
+ * Bugs: No bugs from the tests that I have ran against it. 
+ *
+ *
+ *
+ */
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <assert.h>
+
+#include "datatypes.h"
+#include "list.h"
+#include "soc_support.h"
+
+#define MAXLINE 256
+
+int main(int argc, char *argv[])
+{
+    char line[MAXLINE];
+    char command[MAXLINE];
+    char junk[MAXLINE];
+    int command_number;   // number found with command, either a
+                          // list position or socket-id
+    int num_items;
+    int i;
+    int sort_type;
+    list_t *unsorted_list = NULL;  // Pointer to unsorted list
+    list_t *sorted_list = NULL;  // Pointer to sorted list
+    socket_t *rec_ptr = NULL; // Pointer to socket info
+
+    //if too few / too many arguments
+    if (argc != 2) {
+        printf("Usage: ./lab3 \n");
+        exit(1);
+    }
+
+    //if sort_type is invalid
+    sort_type  = atoi(argv[1]);
+    if (sort_type < 0 || sort_type > 5) {
+        printf("Usage: ./lab3 \n");
+        exit(1);
+    }   
+
+    //printf("Welcome to lab3.\n");
+
+    //construct list
+    unsorted_list = soc_create();
+    sorted_list = soc_create();
+
+    // remember fgets includes newline \n unless line too long 
+    while (fgets(line, MAXLINE, stdin) != NULL) {
+        num_items = sscanf(line, "%s%d%s", command, &command_number, junk);
+        if (num_items == 2 && strcmp(command, "insert") == 0) {
+            rec_ptr = (socket_t *) calloc(1, sizeof(socket_t));
+            soc_get_socket_id(rec_ptr);
+            int added_return = 0;
+
+            //position is invalid
+            if (command_number < 0) {
+                added_return = -1;  
+            }
+
+            else {
+                soc_unsorted_insert(unsorted_list, rec_ptr, command_number);
+            }
+
+            if (added_return == 0) {
+                printf("Inserted: %d into position %d\n", 
+                        rec_ptr->socket_id, command_number);  
+            } else if (added_return == -1) {
+                printf("Rejected: %d invalid position %d\n", 
+                        rec_ptr->socket_id, command_number);
+                free(rec_ptr);
+            } else {
+                printf("Error with return value!  Your code must be fixed\n");
+            }
+            rec_ptr = NULL;
+        } else if (num_items == 2 && strcmp(command, "replace") == 0) {
+            rec_ptr = (socket_t *) calloc(1, sizeof(socket_t));
+            soc_get_socket_id(rec_ptr);
+
+            socket_t *old_rec_ptr = NULL;
+
+            old_rec_ptr = soc_unsorted_replace(unsorted_list, command_number, rec_ptr);
+            
+            if (old_rec_ptr == NULL) {
+                printf("Did not replace: %d invalid position %d\n", 
+                        rec_ptr->socket_id, command_number);
+                free(rec_ptr);
+            } else {
+                printf("Replaced: %d with %d into position %d\n", 
+                        old_rec_ptr->socket_id, rec_ptr->socket_id, 
+                        command_number);
+            }
+            free(old_rec_ptr);
+            rec_ptr = old_rec_ptr = NULL;
+        } else if (num_items == 1 && strcmp(command, "pushback") == 0) {
+            rec_ptr = (socket_t *) calloc(1, sizeof(socket_t));
+            //soc_get_socket_id(rec_ptr);
+            soc_unsorted_insert(unsorted_list, rec_ptr, LISTPOS_TAIL);
+            //printf("Pushed: %d into position %d\n", rec_ptr->socket_id, 
+                    //soc_number_entries(unsorted_list) - 1);
+            rec_ptr = NULL;
+        } else if (num_items == 2 && strcmp(command, "erase") == 0) {
+            rec_ptr = soc_unsorted_remove(unsorted_list, command_number);
+            if (rec_ptr == NULL) {
+                printf("Did not remove: invalid position %d\n", command_number);
+            } else {
+                printf("Erased: %d from position %d\n", rec_ptr->socket_id, 
+                        command_number);
+                free(rec_ptr);
+            }
+            rec_ptr = NULL;
+        } else if (num_items == 1 && strcmp(command, "popback") == 0) {
+            rec_ptr = soc_unsorted_remove(unsorted_list, soc_number_entries(unsorted_list) - 1);
+            if (rec_ptr == NULL) {
+                printf("Did not pop: list is empty\n");
+            } else {
+                printf("Popped: %d from position %d\n", rec_ptr->socket_id, 
+                    soc_number_entries(unsorted_list));
+                free(rec_ptr);
+            }
+            rec_ptr = NULL;
+        } else if (num_items == 2 && strcmp(command, "at") == 0) {
+            rec_ptr = NULL;
+            rec_ptr = soc_access(unsorted_list, command_number);
+            if (rec_ptr == NULL) {
+                printf("Did not print: invalid position %d\n", command_number);
+            } else {
+                printf("Record at position: %d\n", command_number);
+                soc_print_socket_rec(rec_ptr);
+            }
+            rec_ptr = NULL;
+        } else if (num_items == 1 && strcmp(command, "front") == 0) {
+            rec_ptr = soc_access(unsorted_list, LISTPOS_HEAD);
+            if (rec_ptr == NULL) {
+                printf("Did not print front: list is empty\n");
+            } else {
+                printf("Record at front:\n");
+                soc_print_socket_rec(rec_ptr);
+            }
+            rec_ptr = NULL;
+        } else if (num_items == 1 && strcmp(command, "back") == 0) {
+            rec_ptr = soc_access(unsorted_list, LISTPOS_TAIL);
+            if (rec_ptr == NULL) {
+                printf("Did not print back: list is empty\n");
+            } else {
+                printf("Record at back:\n");
+                soc_print_socket_rec(rec_ptr);
+            }
+            rec_ptr = NULL;
+        } else if (num_items == 1 && strcmp(command, "sort") == 0) {
+             soc_sort(unsorted_list, sort_type);
+        } else if (num_items == 2 && strcmp(command, "INSERT") == 0) {
+            rec_ptr = (socket_t *) calloc(1, sizeof(socket_t));
+            rec_ptr->socket_id = command_number;
+            soc_fill_record(rec_ptr);
+            soc_sorted_insert(sorted_list, rec_ptr);
+            printf("Added to sorted list: %d\n", command_number);
+            rec_ptr = NULL;
+        } else if (num_items == 2 && strcmp(command, "LOOK") == 0) {
+            rec_ptr = soc_sorted_lookup(sorted_list, command_number);
+            if (rec_ptr == NULL) {
+                printf("Did not find in sorted list: %d\n", command_number);
+            } else {
+                printf("Found in sorted list: %d\n", command_number);
+                /* print other items in structure */
+                soc_print_socket_rec(rec_ptr);
+                assert(rec_ptr->socket_id == command_number);
+            }
+            rec_ptr = NULL;
+        } else if (num_items == 2 && strcmp(command, "REMOVE") == 0) {
+            rec_ptr = soc_sorted_remove(sorted_list, command_number);
+            if (rec_ptr == NULL) {
+                printf("Did not remove in sorted list: %d\n", command_number);
+            } else {
+                printf("Removed from sorted list: %d\n",command_number);
+                soc_print_socket_rec(rec_ptr);
+                assert(rec_ptr->socket_id == command_number);
+                free(rec_ptr);
+            }
+            rec_ptr = NULL;
+        } else if (num_items == 2 && strcmp(command, "UPDATE") == 0) {
+            rec_ptr = (socket_t *) calloc(1, sizeof(socket_t));
+            rec_ptr->socket_id = command_number;
+            soc_fill_record(rec_ptr);
+            socket_t *old_rec_ptr = soc_sorted_update(sorted_list, rec_ptr);
+            if (old_rec_ptr == NULL) {
+                printf("Did not update in sorted list: %d\n", command_number);
+                free(rec_ptr);
+            } else {
+                printf("Updated sorted list: %d, old record\n",command_number);
+                soc_print_socket_rec(old_rec_ptr);
+                assert(old_rec_ptr->socket_id == command_number);
+            }
+            free(old_rec_ptr);
+            rec_ptr = NULL;
+        } else if (num_items == 1 && strcmp(command, "print") == 0) {
+            int num_in_list = soc_number_entries(unsorted_list);
+            if (num_in_list == 0) {
+                printf("Unsorted list empty\n");
+            } else {
+                printf("%d records in unsorted list\n", num_in_list);
+                for (i = 0; i < num_in_list; i++) {
+                    printf("%4d: ", i);
+                    rec_ptr = soc_access(unsorted_list, i);
+                    soc_print_socket_rec(rec_ptr);
+                }
+            }
+        } else if (num_items == 1 && strcmp(command, "PRINT") == 0) {
+            int num_in_list = soc_number_entries(sorted_list);
+            if (num_in_list == 0) {
+                printf("Sorted list empty\n");
+            } else {
+                printf("%d records in sorted list\n", num_in_list);
+                for (i = 0; i < num_in_list; i++) {
+                    printf("%4d: ", i);
+                    rec_ptr = soc_access(sorted_list, i); 
+                    soc_print_socket_rec(rec_ptr);
+                }
+            }
+        } else if (num_items == 1 && strcmp(command, "stats") == 0) {
+            // get the number in list and size of the list
+            int num_unsorted_list = soc_number_entries(unsorted_list);
+            int num_sorted_list = soc_number_entries(sorted_list);
+            printf("Unsorted number records: %d, Sorted number records: %d\n", 
+                    num_unsorted_list, num_sorted_list);
+        } else if (num_items == 1 && 
+              (strcmp(command, "quit") == 0 || strcmp(command, "QUIT") == 0)) {
+
+            //free allocated space
+            soc_cleanup(unsorted_list);
+            soc_cleanup(sorted_list);
+            //printf("Goodbye\n");
+            break;
+        } else {
+            //printf("# %s", line);
+        }
+    }
+    exit(0);
+}
+
+/* commands specified to vim. ts: tabstop, sts: soft tabstop sw: shiftwidth */
+/* vi:set ts=8 sts=4 sw=4 et: */

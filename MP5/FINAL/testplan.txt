@@ -1,0 +1,613 @@
+/* Test Log                 
+ * Austin Johnson 
+ * agjohns       
+ * ECE 2230 Fall 2016
+ * MP5
+ */
+
+
+Seed: 1476379020
+
+ ======  Number 0  ======
+
+ ====== Unit Driver ======
+
+Inserting 14 item(s) into tree
+
+             56
+        48
+                       46
+                  44
+                       42
+             40
+   32
+                  28
+             24
+                  20
+        16
+                  12
+              8
+                   4
+
+Removing 7 item(s) from tree
+
+ -- Test (0) about to remove key 12
+
+             56
+        48
+                       46
+                  44
+                       42
+             40
+   32
+                  28
+             24
+                  20
+        16
+              8
+                   4
+
+ -- Test (1) about to remove key 20
+
+             56
+        48
+                       46
+                  44
+                       42
+             40
+   32
+                  28
+             24
+        16
+              8
+                   4
+
+ -- Test (2) about to remove key 8
+
+             56
+        48
+                       46
+                  44
+                       42
+             40
+   32
+                  28
+             24
+        16
+              4
+
+ -- Test (3) about to remove key 24
+
+             56
+        48
+                       46
+                  44
+                       42
+             40
+   32
+             28
+        16
+              4
+
+ -- Test (4) about to remove key 40
+
+             56
+        48
+                  46
+             44
+                  42
+   32
+             28
+        16
+              4
+
+ -- Test (5) about to remove key 16
+
+             56
+        48
+                  46
+             44
+                  42
+   32
+        28
+              4
+
+ -- Test (6) about to remove key 48
+
+        56
+                  46
+             44
+                  42
+   32
+        28
+              4
+
+
+THEORETICAL RESULTS: The test should insert 14 items into the tree. It
+		     should then remove key 12 and 20 which have no
+		     children. It should then remove key 24 and replace 
+		     it with key 28. It should then remove key 40 and
+		     replace it with key 48. It should then remove key
+		     16 which contains two children. Key 16 should be
+		     replaced with key 28. Lastly, it should remove key
+	   	     48 which also contains two children. It should be 
+		     replace with key 56 and the final tree displayed. 
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+ ======  Number 1  ======
+
+ ====== Unit Driver ======
+
+Inserting 13 item(s) into tree
+
+                  60
+             56
+        48
+                  44
+             40
+                  36
+   32
+                  28
+             24
+                  20
+        16
+              8
+                   4
+
+Removing 3 item(s) from tree
+
+ -- Test (0) about to remove key 16
+
+                  60
+             56
+        48
+                  44
+             40
+                  36
+   32
+                  28
+             24
+        20
+              8
+                   4
+
+ -- Test (1) about to remove key 48
+
+             60
+        56
+                  44
+             40
+                  36
+   32
+                  28
+             24
+        20
+              8
+                   4
+
+ -- Test (2) about to remove key 32
+
+             60
+        56
+                  44
+             40
+   36
+                  28
+             24
+        20
+              8
+                   4
+
+
+
+ ====== Unit Driver ======
+
+Inserting 13 item(s) into tree
+
+                  60
+             56
+                  52
+        48
+             40
+                  36
+   32
+                  28
+             24
+        16
+                  12
+              8
+                   4
+
+Removing 3 item(s) from tree
+
+ -- Test (0) about to remove key 16
+
+                  60
+             56
+                  52
+        48
+             40
+                  36
+   32
+             28
+        24
+                  12
+              8
+                   4
+
+ -- Test (1) about to remove key 48
+
+                  60
+             56
+        52
+             40
+                  36
+   32
+             28
+        24
+                  12
+              8
+                   4
+
+ -- Test (2) about to remove key 32
+
+                  60
+             56
+        52
+             40
+   36
+             28
+        24
+                  12
+              8
+                   4
+
+
+THEORETICAL RESULTS: For the tree with (48) missing its right-left child 
+	       	     and (16) is missing its left-right child --> the 
+		     test should insert 13 items into the tree. It should
+		     then remove key 16 and replace it with 20. It should
+		     then remove key 48 and replace it with 56. Lastly, it 
+		     should remove the root, replacing it with the minimum
+		     value in the right subtree (which is 36). It should 
+		     then print the final tree. For the tree with (16) missing 
+		     its right-left child and (48) is missing its left-right 
+		     child --> the test should insert 13 items into the tree. 
+		     It should then remove key 16 and replace it with 24. 
+		     It should then remove key 48 and replace it with 52. 
+		     Lastly, it should remove the root, replacing it with the 
+		     minimum value in the right subtree (which is still 36). 
+		     The final tree should be printed. 
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+ ======  Number 2  ======
+
+ ====== Unit Driver ======
+
+Inserting 16 item(s) into tree
+
+  200
+                 175
+            150
+                           140
+                      135
+                           130
+                 125
+       100
+                       85
+                                 82
+                            80
+                                 78
+                  75
+                       65
+             50
+                  25
+
+Removing 3 item(s) from tree
+
+ -- Test (0) about to remove key 100
+
+  200
+                 175
+            150
+                      140
+                 135
+                      130
+       125
+                       85
+                                 82
+                            80
+                                 78
+                  75
+                       65
+             50
+                  25
+
+ -- Test (1) about to remove key 85
+
+  200
+                 175
+            150
+                      140
+                 135
+                      130
+       125
+                            82
+                       80
+                            78
+                  75
+                       65
+             50
+                  25
+
+ -- Test (2) about to remove key 125
+
+  200
+                 175
+            150
+                      140
+                 135
+       130
+                            82
+                       80
+                            78
+                  75
+                       65
+             50
+                  25
+
+
+THEORETICAL RESULTS: The test should insert 16 items into the 
+		     tree. It should then remove the only child
+		     of the root (key 100) and replace it with
+		     125. It should then remove 85 and replace
+		     it with key 80. Lastly, it should remove
+	   	     the only child of the root again (key 125)
+		     and replace it with 130. It should print
+		     the final tree.  	
+		    
+ACTUAL RESULTS: Passed the test. 
+
+
+
+ ======  Number 3  ======
+
+ ====== Unit Driver ======
+
+Inserting 2 item(s) into tree
+
+   10
+
+Removing 1 item(s) from tree
+
+ -- Test (0) about to remove key 10
+
+
+THEORETICAL RESULTS: The test should insert 1 item into the tree
+		     with a value of 10. It should then try to 
+		     insert key 10 again, replacing the data at 
+		     the key already in the tree. Lastly, it 
+		     should delete the only item in the tree (the
+		     root) and display an empty tree. 
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+ ======  Number 4  ======
+
+ ====== Unit Driver ======
+
+Inserting 1 item(s) into tree
+
+   10
+
+Removing 2 item(s) from tree
+
+ -- Test (0) about to remove key 10
+
+
+ -- Test (1) about to remove key 10
+
+
+
+###### FAILED to find key 10 in the tree ######
+
+
+THEORETICAL RESULTS: The test should insert an item with a 	
+		     value of 10 in the tree. It should then
+	 	     removing the only item in the list and
+	  	     display an empty tree. It should then	
+		     try to remove key 10 again but should 
+		     fail because it tries to access an item
+		     not in the tree. 
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+ ======  Number 5  ======
+
+ ====== Unit Driver ======
+
+Inserting 3 item(s) into tree
+
+         6
+    4
+         2
+
+Removing 3 item(s) from tree
+
+ -- Test (0) about to remove key 2
+
+         6
+    4
+
+ -- Test (1) about to remove key 6
+
+    4
+
+ -- Test (2) about to remove key 4
+
+
+THEORETICAL RESULTS: The test should insert 3 items into the
+		     tree. The test should remove key 2 from
+		     the tree, leaving only 4 and 6. It should
+		     then remove key 6 from the tree, leaving
+		     only the root. Lastly, it should remove 
+		     the root and display and empty tree. 
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+ ======  Number 6  ======
+
+ ====== Unit Driver ======
+
+Inserting 5 item(s) into tree
+
+   20
+        10
+                   7
+              5
+                   3
+
+Removing 1 item(s) from tree
+
+ -- Test (0) about to remove key 10
+
+   20
+              7
+         5
+              3
+
+
+
+ ====== Unit Driver ======
+
+Inserting 5 item(s) into tree
+
+        10
+                   7
+              5
+                   3
+    2
+
+Removing 1 item(s) from tree
+
+ -- Test (0) about to remove key 10
+
+              7
+         5
+              3
+    2
+
+
+THEORETICAL RESULTS: For the tree with an only left child --> The test 
+		     should insert 5 items into the tree. It should then 
+		     remove the root's only child (key 10) and replace it 
+		     with 5, displaying the final tree. For the tree with
+		     an only right child --> The test should insert 5 items
+		     into the tree. It should then remove the root's only 
+		     right child (key 10) and replace it with 5, displaying
+		     the final tree. 
+
+ACTUAL RESULTS: Passed the test. 
+		     
+
+
+ ======  Number 7  ======
+
+ ====== Unit Driver ======
+
+Inserting 4 item(s) into tree
+
+   10
+              7
+         5
+              3
+
+Removing 1 item(s) from tree
+
+ -- Test (0) about to remove key 10
+
+         7
+    5
+         3
+
+
+THEORETICAL RESULTS: The test should insert 4 items into the tree. It should 
+		     then remove the root of the tree, replacing it with its only 
+		     child and displaying the final form of the tree.
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+ ======  Number 8  ======
+
+ ====== Unit Driver ======
+
+Inserting 6 item(s) into tree
+
+             17
+        15
+             13
+   10
+         5
+              3
+
+Removing 1 item(s) from tree
+
+ -- Test (0) about to remove key 10
+
+             17
+        15
+   13
+         5
+              3
+
+
+
+ ====== Unit Driver ======
+
+Inserting 6 item(s) into tree
+
+             17
+        15
+   10
+              7
+         5
+              3
+
+Removing 1 item(s) from tree
+
+ -- Test (0) about to remove key 10
+
+        17
+   15
+              7
+         5
+              3
+
+
+THEORETICAL RESULTS: For the tree with the left side containing only 
+		     left children --> The test should insert 6
+		     items into the tree. It should then remove 
+		     root, replacing it with the minimum of its 
+		     right child (13). It should display the final
+		     tree. For the tree with the right side only 
+		     having right children --> The test should insert 
+		     6 items into the tree. It should then remove the
+		     root, replacing it with the minimum of its right
+		     child (15). It should display the final tree. 
+
+ACTUAL RESULTS: Passed the test.  
+

@@ -1,0 +1,44 @@
+/* graph_support.c
+ * Austin Johnson 
+ * agjohns
+ * ECE 2230 Fall 2016 
+ * MP6
+ *
+ * Purpose: The purpose of this file is to provide functions for the graph.c file. It is
+ *          used for information hiding
+ *
+ * Assumptions: Suggested structure definitions and public functions 
+ *              as defined for assignmnet.  
+ *
+ *              
+ *
+ * Bugs: No bugs from the tests that I have ran against it. 
+ *
+ * 
+ */
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+
+#include "bst.h"
+
+
+/* This creates a list and it can be either a sorted or unsorted list
+ *
+ * This function provides an example of how to use function pointers.  
+ */
+int adj_insert (bst_t *tree, bst_key_t key, data_t data) {
+    return bst_insert (bst_t *tree, bst_key_t key, data_t data);
+}
+
+
+
+
+
+
+
+
+
+/* commands specified to vim. ts: tabstop, sts: soft tabstop sw: shiftwidth */
+/* vi:set ts=8 sts=4 sw=4 et: */

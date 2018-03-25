@@ -1,0 +1,834 @@
+/* list.c                  
+ * Austin Johnson 
+ * agjohns       
+ * ECE 2230 Fall 2016
+ * MP3
+ *
+ * Purpose: The purpose of this file is to provide functions for the soc_support.c
+            file. The reason it is separate from the main file is for information hiding
+ *          and to allow the programmer to use different data structures with the 
+ *          lab3.c file without changing it. 
+ *
+ * Assumptions: Suggested structure definitions and public functions 
+ *              as defined for assignmnet.   
+ *
+ * Bugs: No bugs from the tests that I have ran against it.
+ *
+ * The interface definition for the two-way linked list ADT is based on one 
+ * defined by OPNET, Inc. http://www.opnet.com/
+ */
+#include <stdlib.h>
+#include <assert.h>
+#include <stdio.h>
+
+#include "datatypes.h"   // defines data_t 
+#include "list.h"        // defines public functions for list ADT
+
+// definitions for private constants used in list.c only
+
+#define LIST_SORTED    999999
+#define LIST_UNSORTED -888888
+
+// prototypes for private functions used in list.c only 
+
+void list_debug_validate(list_t *L);
+
+/* ----- below are the functions  ----- */
+
+/* Obtains a pointer to an element stored in the specified list, at the
+ * specified list position
+ * 
+ * list_ptr: pointer to list-of-interest.  A pointer to an empty list is
+ *           obtained from list_construct.
+ *
+ * pos_index: position of the element to be accessed.  Index starts at 0 at
+ *            head of the list, and incremented by one until the tail is
+ *            reached.  Can also specify LISTPOS_HEAD and LISTPOS_TAIL
+ *
+ * return value: pointer to element accessed within the specified list.  A
+ * value NULL is returned if the pos_index does not correspond to an element in
+ * the list.
+ */
+data_t * list_access(list_t *list_ptr, int pos_index)
+{
+    int count=0;
+    list_node_t *L;
+ 
+    /* handle special cases.
+     *   1.  The list is empty
+     *   2.  Asking for the head 
+     *   3.  Asking for the tail
+     *   4.  specifying a position that is out of range.  This is not defined
+     *       to be an error in this function, but instead it is assumed the 
+     *       calling function correctly specifies the position index
+     */
+    if (list_entries(list_ptr) == 0) {
+        return NULL;  // list is empty
+    }
+    else if (pos_index == LISTPOS_HEAD || pos_index == 0) {
+        return list_ptr->ll_head->data_ptr;
+    }
+    else if (pos_index == LISTPOS_TAIL || pos_index == list_entries(list_ptr) - 1) {
+        return list_ptr->ll_tail->data_ptr;
+    }
+    else if (pos_index < 0 || pos_index >= list_entries(list_ptr))
+        return NULL;   // does not correspond to position in list
+
+    // loop through the list until find correct position index
+    L=list_ptr->ll_head;
+    for (count = 0; count < pos_index; count++) {
+        L = L->ll_next;
+    }
+    // already verified that pos_index should be valid so L better not be null
+    assert(L != NULL);
+    assert(L->data_ptr != NULL);
+    return L->data_ptr;
+}
+
+/* Allocates a new, empty list 
+ *
+ * By convention, the list is initially assumed to be sorted.  The field sorted
+ * can only take values LIST_SORTED or LIST_UNSORTED
+ *
+ * Use list_destruct to remove and deallocate all elements on a list 
+ * and the header block.
+ */
+list_t * list_construct(int (*fcomp)(const data_t *, const data_t *),
+        int (*qcomp)(const void *, const void *)) {
+    
+    list_t *L;
+    L = (list_t *) malloc(sizeof(list_t));
+    L->ll_head = NULL;
+    L->ll_tail = NULL;
+    L->ll_entries = 0;
+    L->ll_sorted_state = LIST_SORTED;
+    L->comp_proc = fcomp;
+    L->qsort_comp = qcomp;
+    return L;
+}
+
+/* Finds an element in a list and returns a pointer to it.
+ *
+ * list_ptr: pointer to list-of-interest.  
+ *
+ * elem_ptr: element against which other elements in the list are compared.
+ *           Note: use the comp_proc function pointer found in the list_t 
+ *           header block. 
+ *
+ * NOTICE: pos_index is returned and is not an input value!
+ *
+ * The function returns a pointer to the matching element with lowest index if
+ * a match if found.  If a match is not found the return value is NULL.
+ *
+ * The function also returns the integer position of matching element with the
+ *           lowest index.  If a matching element is not found, the position
+ *           index that is returned should be -1. 
+ *
+ * pos_index: used as a return value for the position index of matching element
+ *
+ */
+data_t * list_elem_find(list_t *list_ptr, data_t *elem_ptr, int *pos_index)
+{
+
+    //search for element
+    list_node_t *N = list_ptr->ll_head;
+    int i = 0, temp = 0;
+
+    while (N != NULL) {
+
+         temp = list_ptr->comp_proc(N->data_ptr, elem_ptr);
+
+         if (temp == 0) {
+            *pos_index = i; //set *pos_index to position where elem_ptr == data_ptr in list 
+            return N->data_ptr;
+         }
+         
+         else {
+            N = N->ll_next;
+            i++;
+        }
+    }
+                
+    return NULL; //return pointer to block of data where elem_ptr is found
+}
+
+/* Deallocates the contents of the specified list, releasing associated memory
+ * resources for other purposes.
+ */
+void list_destruct(list_t *list_ptr)
+{
+
+    list_node_t *N = list_ptr->ll_head;
+    list_node_t *temp = NULL;
+
+    while (N != NULL) {
+        temp = N;
+        N = N->ll_next;
+        free(temp->data_ptr);
+        free(temp);
+    }
+
+    free(N);
+    free(list_ptr);
+}
+
+/* Inserts the specified data element into the specified list at the specified
+ * position.
+ *
+ * list_ptr: pointer to list-of-interest.  
+ *
+ * elem_ptr: pointer to the element to be inserted into list.
+ *
+ * pos_index: numeric position index of the element to be inserted into the 
+ *            list.  Index starts at 0 at head of the list, and incremented by 
+ *            one until the tail is reached.  The index can also be equal
+ *            to LISTPOS_HEAD or LISTPOS_TAIL (these are special negative 
+ *            values use to provide a short cut for adding to the head
+ *            or tail of the list).
+ *
+ * If pos_index is greater than the number of elements currently in the list, 
+ * the element is simply appended to the end of the list (no additional elements
+ * are inserted).
+ *
+ * Note that use of this function results in the list to be marked as unsorted,
+ * even if the element has been inserted in the correct position.  That is, on
+ * completion of this subroutine the list_ptr->ll_sorted_state must be equal 
+ * to LIST_UNSORTED.
+ */
+void list_insert(list_t *list_ptr, data_t *elem_ptr, int pos_index) {
+
+    //malloc space for new node and initialize values
+    list_node_t *new_node = (list_node_t *) malloc(sizeof(list_node_t)); 
+    new_node->ll_prev = NULL, new_node->ll_next = NULL;
+    new_node->data_ptr = elem_ptr; 
+
+    //empty list
+    if (list_ptr->ll_head == NULL) {
+
+        list_ptr->ll_head = new_node;
+        list_ptr->ll_tail = new_node;
+        list_ptr->ll_entries = 1;
+    }  
+
+    //insert at beginning of the list
+    else if (pos_index == 0 || pos_index == LISTPOS_HEAD) {
+   
+        new_node->ll_next = list_ptr->ll_head;
+
+        list_ptr->ll_head->ll_prev = new_node;
+        list_ptr->ll_head = new_node;
+        list_ptr->ll_entries += 1;
+    }
+
+    //insert into middle of the list  
+    else if (pos_index > 0 && pos_index < list_ptr->ll_entries) {
+        
+        list_node_t *N = list_ptr->ll_head;
+        int i = 1;
+
+        //find the position
+        while (i < pos_index) {
+
+            N = N->ll_next;
+            i++;
+        }
+
+        new_node->ll_prev = N;
+        new_node->ll_next = N->ll_next;
+        N->ll_next->ll_prev = new_node; 
+        N->ll_next = new_node;        
+        list_ptr->ll_entries += 1;
+    }
+
+    //insert at the end of the list
+    else if (pos_index >= list_ptr->ll_entries || pos_index == LISTPOS_TAIL) {
+
+        new_node->ll_prev = list_ptr->ll_tail;
+
+        list_ptr->ll_tail->ll_next = new_node; 
+        list_ptr->ll_tail = new_node;
+        list_ptr->ll_entries += 1;
+    }
+
+    assert(list_ptr != NULL);
+
+    //the last two lines of this function must be the following 
+    if (list_ptr->ll_sorted_state == LIST_SORTED) 
+        list_ptr->ll_sorted_state = LIST_UNSORTED;
+}
+
+/* Inserts the element into the specified sorted list at the proper position,
+ * as defined by the comp_proc function pointer found in the header block.
+ *
+ * list_ptr: pointer to list-of-interest.  
+ *
+ * elem_ptr: pointer to the element to be inserted into list.
+ *
+ * If you use list_insert_sorted, the list preserves its sorted nature.
+ *
+ * If you use list_insert, the list will be considered to be unsorted, even
+ * if the element has been inserted in the correct position.
+ *
+ * If the list is not sorted and you call list_insert_sorted, this subroutine
+ * should generate a system error and the program should immediately stop.
+ *
+ * The comparison procedure must accept two arguments (A and B) which are both
+ * pointers to elements of type data_t.  The comparison procedure returns an
+ * integer code which indicates the precedence relationship between the two
+ * elements.  The integer code takes on the following values:
+ *    1: A should be closer to the list head than B
+ *   -1: B should be closer to the list head than A
+ *    0: A and B are equal in rank
+ *
+ * Note: if the element to be inserted is equal in rank to an element already
+ *       in the list, the newly inserted element will be placed after all the 
+ *       elements of equal rank that are already in the list.
+ */
+void list_insert_sorted(list_t *list_ptr, data_t *elem_ptr)
+{
+        assert(list_ptr != NULL);
+        assert(list_ptr->ll_sorted_state == LIST_SORTED);
+
+        //malloc space for new node and initialize values
+        list_node_t *new_node = (list_node_t *) malloc(sizeof(list_node_t)); 
+        new_node->ll_prev = NULL, new_node->ll_next = NULL;
+        new_node->data_ptr = elem_ptr; 
+
+        //empty list
+        if (list_ptr->ll_head == NULL) {
+
+            list_ptr->ll_head = new_node;
+            list_ptr->ll_tail = new_node;
+            list_ptr->ll_entries = 1;
+        }
+
+        else {
+
+             int temp = 0;
+             list_node_t *curr = list_ptr->ll_head;
+             list_node_t *prev = NULL;
+
+             //find where to insert node
+             while (curr != NULL) {
+
+                temp = list_ptr->comp_proc(curr->data_ptr, new_node->data_ptr); 
+
+                if (temp == -1) {
+                    break;
+                }
+
+                else {
+
+                    prev = curr;
+                    curr = curr->ll_next;
+                }
+             }
+  
+             //insert at the head
+             if (prev == NULL) {
+
+                new_node->ll_next = list_ptr->ll_head;
+                list_ptr->ll_head->ll_prev = new_node;
+                list_ptr->ll_head = new_node;
+                list_ptr->ll_entries += 1;
+             }
+
+            //insert at the tail
+            else if(curr == NULL) {
+               
+                list_ptr->ll_tail->ll_next = new_node;
+                new_node->ll_prev = list_ptr->ll_tail;
+                new_node->ll_next = NULL;
+                list_ptr->ll_tail = new_node;
+                list_ptr->ll_entries += 1;
+            }
+
+            //insert in the middle
+            else {
+
+               new_node->ll_prev = prev;
+               new_node->ll_next = curr;
+               curr->ll_prev = new_node; 
+               prev->ll_next = new_node;
+               list_ptr->ll_entries += 1;
+           }
+        }  
+}
+
+/* Removes an element from the specified list, at the specified list position,
+ * and returns a pointer to the element.
+ *
+ * list_ptr: pointer to list-of-interest.  
+ *
+ * pos_index: position of the element to be removed.  Index starts at 0 at
+ *            head of the list, and incremented by one until the tail is
+ *            reached.  Can also specify LISTPOS_HEAD and LISTPOS_TAIL
+ *
+ * Attempting to remove an element at a position index that is not contained in
+ * the list will result in no element being removed, and a NULL pointer will be
+ * returned.
+ */
+data_t * list_remove(list_t *list_ptr, int pos_index) {
+
+    //invalid position
+    if ((pos_index < 0 || pos_index >=list_ptr->ll_entries) && 
+        (pos_index != LISTPOS_HEAD && pos_index != LISTPOS_TAIL))  {
+                return NULL;
+    }
+
+    else { 
+        
+        list_node_t *curr = list_ptr->ll_head;
+        list_node_t *prev = NULL;
+        data_t *temp = NULL;
+        int i = 0;
+
+        //find node to remove
+        while (curr != NULL) {
+            
+            if (i == pos_index || pos_index == LISTPOS_HEAD || pos_index == LISTPOS_TAIL) 
+                break;
+          
+            else {
+                prev = curr;
+                curr = curr->ll_next;
+                i++;
+            }
+        }
+
+        temp = curr->data_ptr;
+
+        //if only one item in the list
+        if (list_ptr->ll_entries == 1) {
+            list_ptr->ll_head = NULL;
+            list_ptr->ll_tail = NULL;
+            list_ptr->ll_entries -= 1;
+        }
+
+        //if node is the head
+        else if (pos_index == 0 || pos_index == LISTPOS_HEAD) {
+            
+                list_ptr->ll_head = curr->ll_next;
+                list_ptr->ll_head->ll_prev = NULL;
+                list_ptr->ll_entries -= 1;        
+
+                //if only one item in the list set tail = head 
+                if (list_ptr->ll_entries == 1) {
+                    list_ptr->ll_head->ll_next = NULL;
+                    list_ptr->ll_tail = list_ptr->ll_head;
+                }
+        }    
+
+        //if node is the tail
+        else if (pos_index == list_ptr->ll_entries - 1 || pos_index == LISTPOS_TAIL) {
+
+                list_ptr->ll_tail = prev;
+                list_ptr->ll_tail->ll_next = NULL;
+                list_ptr->ll_entries -= 1;
+        }
+
+        //node in the middle
+        else { 
+                prev->ll_next = curr->ll_next;
+                curr->ll_next->ll_prev = prev;
+                list_ptr->ll_entries -= 1;
+        }
+        
+        if (list_ptr->ll_entries < 0) 
+            list_ptr->ll_entries = 0;
+
+        free(curr);
+        return temp;
+     }
+}
+
+/* Sorts a list using the method of insertion by inserting into a sorted list and 
+ *setting the old list equal to the sorted one. 
+ *
+ *
+ * list_ptr: pointer to list-of-interest.  
+ *
+ *
+ * This sort method is in time O(N^2) on average and has a best 
+ * sort time of O(N).
+ */
+void insertion_sort (list_t *list_ptr) {
+
+    list_t *sorted_list_ptr = list_construct(list_ptr->comp_proc, list_ptr->qsort_comp);
+    data_t *rec_ptr = NULL;    
+
+    while (list_ptr->ll_head != NULL) {
+        rec_ptr = list_remove(list_ptr, LISTPOS_HEAD);
+        list_insert_sorted(sorted_list_ptr, rec_ptr);
+    }
+
+    *list_ptr = *sorted_list_ptr;
+    free(sorted_list_ptr);
+}
+
+/* Finds the smallest record in a list and returns it
+ *
+ *
+ * list_ptr: pointer to list-of-interest.
+ * curr_node: pointer to the head of the list
+ * tail: pointer to the tail of the list  
+ *
+ */
+data_t *FindMin (list_t *list_ptr, list_node_t *curr_node, list_node_t *tail) {
+
+        list_node_t *i = curr_node;
+        list_node_t *j = curr_node;
+      
+        do {
+            i = i->ll_next;
+            if (i != j) 
+                j = i;
+        } while (i != tail);
+    
+        return j->data_ptr;
+}
+
+
+/* Sorts a list by scanning it until it finds the smallest (using 
+ * supporting function FindMin). It then swaps it into postion as
+ * the first item. It repeats this on the remaining N-1 items. 
+ *
+ *
+ * list_ptr: pointer to list-of-interest.
+ * curr_node: pointer to the head of the list
+ * tail: pointer to the tail of the list    
+ *
+ *
+ * This is the recursive version of a selecion sort. This sort method is 
+ * in time O(N^2) all the time. 
+ */
+void recursive_sort (list_t *list_ptr, list_node_t *curr_node, list_node_t *tail) {
+
+    data_t *min = NULL, temp;
+
+    if (curr_node != tail) {
+
+        min = FindMin (list_ptr, curr_node, tail);
+        temp = *curr_node->data_ptr;
+        *curr_node->data_ptr = *min;
+        *min = temp;
+
+        selection_sort (list_ptr, curr_node->ll_next, tail);
+    }
+}
+ 
+
+/* Sorts a list by scanning it until it finds the smallest (using 
+ * supporting function FindMin). It then swaps it into postion as
+ * the first item. It repeats this on the remaining N-1 items. 
+ *
+ *
+ * list_ptr: pointer to list-of-interest.
+ * curr_node: pointer to the head of the list
+ * tail: pointer to the tail of the list    
+ *
+ *
+ * This is the iterative version of a selecion sort. This sort method is 
+ * in time O(N^2) all the time. 
+ */      
+void iterative_sort (list_t *list_ptr, list_node_t *curr_node, list_node_t *tail) {
+
+     list_node_t *i = NULL, *MinPosition = NULL;
+     data_t temp;
+
+     while (list_ptr->ll_entries > 1 && curr_node != tail) {
+
+        i = MinPosition = curr_node;
+
+        do {
+            i = i->ll_next;
+            if (list_ptr->comp_proc(i->data_ptr, MinPosition->data_ptr) == 1)
+                MinPosition = i;
+        } while (i != tail);
+
+        temp = *curr_node->data_ptr;
+        *curr_node->data_ptr = *MinPosition->data_ptr;
+        *MinPosition->data_ptr = temp;
+
+        curr_node = curr_node->ll_next;
+    }
+}
+
+
+/* Splits a list into two halves. If the list is odd, the extra entry is
+ * placed on the second half of the list. 
+ *
+ *
+ * list_ptr: pointer to list-of-interest.
+ * front_half: pointer to a pointer to a list -> stores first half of the list 
+ * back_half: pointer to a pointer to a list -> stores second half of the list    
+ *
+ *
+ * The reason for the use of double pointers is to allow us to "return" two 
+ * separate lists.  
+ */
+void split_list (list_t *list_ptr, list_t **front_half, list_t **back_half) {
+
+    int split_entries = list_entries(list_ptr) / 2, i;
+    data_t *rec_ptr = NULL; 
+
+    //if list is empty
+    if (list_entries(list_ptr) == 0) {
+        *front_half = NULL;
+        *back_half = NULL;
+    }
+
+    //if list only contains one entry
+    else if (list_entries(list_ptr) == 1) {
+        *front_half = list_ptr;
+        *back_half = NULL;
+    }
+
+    else {
+
+        //front half of list
+        for(i = 0; i < split_entries; i++) {
+                rec_ptr = list_remove(list_ptr, LISTPOS_HEAD);
+                list_insert(*front_half, rec_ptr, LISTPOS_TAIL);           
+        }
+
+       //back half of list <-- if odd this list gets extra entry
+       while (list_ptr->ll_head != NULL) {            
+               rec_ptr = list_remove(list_ptr, LISTPOS_HEAD);
+               list_insert(*back_half, rec_ptr, LISTPOS_TAIL); 
+       }
+
+    }
+}
+
+
+/* Merges two sorted lists into one complete sorted list
+ *
+ *
+ * merged_list: pointer to a pointer to a list -> stores L and R
+ * L: a pointer to a list-of-interest
+ * R: a pointer to a list-of_interest    
+ *
+ *
+ * The use of a double pointer allows us to have a void function while
+ * still "returning" the list. 
+ *
+ */
+void merge_two_lists (list_t **merged_list, list_t *L, list_t *R) { 
+
+    data_t *rec_ptr = NULL;  
+
+    while (L->ll_head != NULL || R->ll_head != NULL) {
+
+        if (L->ll_head == NULL) {
+            rec_ptr = list_remove(R, LISTPOS_HEAD);
+            list_insert(*merged_list, rec_ptr, LISTPOS_TAIL);
+        }
+        
+        else if (R->ll_head == NULL) {      
+                rec_ptr = list_remove(L, LISTPOS_HEAD);
+                list_insert(*merged_list, rec_ptr, LISTPOS_TAIL);
+        }
+    
+        else if ((*merged_list)->comp_proc(L->ll_head->data_ptr, R->ll_head->data_ptr) == 1) {  
+            rec_ptr = list_remove(L, LISTPOS_HEAD);
+            list_insert(*merged_list, rec_ptr, LISTPOS_TAIL);
+        }
+
+        else {
+            rec_ptr = list_remove(R, LISTPOS_HEAD);
+            list_insert(*merged_list, rec_ptr, LISTPOS_TAIL);
+        }
+    }
+
+    free(L), free(R);
+}
+
+
+/* Sorts a list by recursively splitting it until the sublist size is 1. 
+ * It then merges those sublists to produce a sorted list. 
+ *
+ *
+ * list_ptr: pointer to list-of-interest --> the use of a double pointer 
+ *           allows us to store the sorted list back into the original list.   
+ *
+ *
+ * This sort method is in time O(N log(N)) all the time. 
+ */
+void merge_sort (list_t **list_ptr) {
+
+    list_t *L = list_construct((*list_ptr)->comp_proc, (*list_ptr)->qsort_comp);
+    list_t *R = list_construct((*list_ptr)->comp_proc, (*list_ptr)->qsort_comp);
+
+    if ((*list_ptr)->ll_entries > 1) {
+        
+        split_list(*list_ptr, &L, &R);
+
+        merge_sort(&L);
+        merge_sort(&R);
+
+        //set list_ptr to sorted
+        (*list_ptr)->ll_sorted_state = LIST_SORTED;
+
+        merge_two_lists(list_ptr, L, R);
+    }
+
+    else {
+        free(L), free(R);
+        return;
+    }
+}   
+
+
+/* Sorts a list using the built in function, qsort. This implementation
+ * loops through the list storing each record into a dynamically allocated
+ * array. This allows qsort to sort the array. The records from the array are 
+ * then reinserted back into the list.  
+ *
+ *
+ * list_ptr: pointer to list-of-interest --> the use of a double pointer 
+ *           allows us to store the sorted list back into the original list.  
+ *
+ *
+ * This sort method is in time O(N log(N)) on average and has a worst sort 
+ * time of O(N^2).
+ *
+ */
+void quick_sort (list_t **list_ptr) {
+
+    int i, Asize = list_entries(*list_ptr);
+    data_t **QsortA = (data_t **) malloc(Asize*sizeof(data_t *));
+    
+    for (i = 0; i < Asize; i++) {
+        QsortA[i] = list_remove(*list_ptr, LISTPOS_HEAD);
+    }
+
+    qsort(QsortA, Asize, sizeof(data_t *), (*list_ptr)->qsort_comp);
+    for (i = 0; i < Asize; i++) {
+        list_insert(*list_ptr, QsortA[i], LISTPOS_TAIL);
+    }
+
+    free(QsortA);
+} 
+
+
+/* This is a support function that calls different sort types depending
+ * on the value the user input as sorttype.
+ *
+ *
+ * list_ptr: pointer to list-of-interest 
+ * sorttype: a number that corresponds to a sorting method...
+ *      1 = insertion sort
+ *      2 = recursive selection sort
+ *      3 = iterative selection sort
+ *      4 = merge sort
+ *      5 = quick sort
+ *
+ * This function first checks if the list_ptr states that it is sorted to
+ * avoid unnecessary sorting when the user uses SORTED commands in lab3.c
+ *
+ *
+ */
+void list_sort(list_t *list_ptr, int sorttype) {
+
+    //if list is already sorted
+    if (list_ptr->ll_sorted_state == LIST_SORTED)
+        return;
+
+    if (sorttype == 1) 
+        insertion_sort(list_ptr);
+
+    else if (sorttype == 2)
+        recursive_sort (list_ptr, list_ptr->ll_head, list_ptr->ll_tail);
+   
+    else if (sorttype == 3) 
+        iterative_sort (list_ptr, list_ptr->ll_head, list_ptr->ll_tail);
+
+    else if (sorttype == 4) 
+        merge_sort(&list_ptr);
+
+    else 
+        quick_sort(&list_ptr);        
+
+    //these two lines must be at the end
+    list_ptr->ll_sorted_state = LIST_SORTED;
+    list_debug_validate(list_ptr);
+}
+
+
+
+/* Obtains the length of the specified list, that is, the number of elements
+ * that the list contains.
+ *
+ * list_ptr: pointer to list-of-interest.  
+ *
+ * Returns an integer equal to the number of elements stored in the list.  An
+ * empty list has a size of zero.
+ */
+int list_entries(list_t *list_ptr)
+{
+    assert(list_ptr != NULL);
+    assert(list_ptr->ll_entries >= 0);
+    return list_ptr->ll_entries;
+}
+
+/* This function verifies that the pointers for the two-way linked list are
+ * valid, and that the list size matches the number of items in the list.
+ *
+ * If the linked list is sorted it also checks that the elements in the list
+ * appear in the proper order.
+ *
+ * The function produces no output if the two-way linked list is correct.  It
+ * causes the program to terminate and print a line beginning with "Assertion
+ * failed:" if an error is detected.
+ *
+ * The checks are not exhaustive, so an error may still exist in the
+ * list even if these checks pass.
+ *
+ * YOU MUST NOT CHANGE THIS FUNCTION.  WE USE IT DURING GRADING TO VERIFY THAT
+ * YOUR LIST IS CONSISTENT.
+ */
+void list_debug_validate(list_t *L)
+{
+    list_node_t *N;
+    int count = 0;
+    assert(L != NULL);
+    if (L->ll_head == NULL)
+        assert(L->ll_tail == NULL && L->ll_entries == 0);
+    if (L->ll_tail == NULL)
+        assert(L->ll_head == NULL && L->ll_entries == 0);
+    if (L->ll_entries == 0)
+        assert(L->ll_head == NULL && L->ll_tail == NULL);
+    assert(L->ll_sorted_state == LIST_SORTED || L->ll_sorted_state == LIST_UNSORTED);
+
+    if (L->ll_entries == 1) {
+        assert(L->ll_head == L->ll_tail && L->ll_head != NULL);
+        assert(L->ll_head->ll_next == NULL && L->ll_head->ll_prev == NULL);
+        assert(L->ll_head->data_ptr != NULL);
+    }
+    if (L->ll_head == L->ll_tail && L->ll_head != NULL)
+        assert(L->ll_entries == 1);
+    if (L->ll_entries > 1) {
+        assert(L->ll_head != L->ll_tail && L->ll_head != NULL && L->ll_tail != NULL);
+        N = L->ll_head;
+        assert(N->ll_prev == NULL);
+        while (N != NULL) {
+            assert(N->data_ptr != NULL);
+            if (N->ll_next != NULL) assert(N->ll_next->ll_prev == N);
+            else assert(N == L->ll_tail);
+            count++;
+            N = N->ll_next;
+        }
+        assert(count == L->ll_entries);
+    }
+    if (L->ll_sorted_state == LIST_SORTED && L->ll_head != NULL) {
+        N = L->ll_head;
+        while (N->ll_next != NULL) {
+            assert(L->comp_proc(N->data_ptr, N->ll_next->data_ptr) != -1);
+            N = N->ll_next;
+        }
+    }
+}
+
+/* commands for vim. ts: tabstop, sts: softtabstop sw: shiftwidth */
+/* vi:set ts=8 sts=4 sw=4 et: */

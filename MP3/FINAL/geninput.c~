@@ -1,0 +1,94 @@
+/* geninput.c
+ * MP3
+ * Harlan Russell
+ * ECE 2230, Fall 2016
+ *
+ * Compile with 
+ *     gcc -g -Wall geninput.c -o geninput 
+ *
+ * Purpose: Generate an input file for MP3 
+ * Assumptions: Input file is for testing sort.  Creates
+ *              an unsorted list, uses pushback to insert items, and
+ *              calls sort to sort the list
+ *
+ * Command line arguments:
+ *    1st -- number of records to create
+ *    2nd -- type of list to create
+ *           1: random addresses [0, 3/4 number records)
+ *           2: assending and sequential
+ *           3: descending and sequential
+ *    optional 3rd argument to change the seed
+ *
+ * Pipe the output of this program into lab3. For example
+ *     ./geninput 10000 1 | ./lab3 1
+ *
+ * See also mp3test.sh 
+ */
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+
+int main(int argc, char *argv[])
+{
+    int records = 0, list_type = -1;
+    int addr_range;
+    int soc_id;
+    int seed = 1473633459;
+
+    if (argc != 3 && argc != 4) {
+        printf("Usage: ./geninput listsize listype [seed]\n");
+        printf("\tlistsize: number of records to create\n");
+        printf("\tlisttype: {1, 2, 3} for random, ascending or descending\n");
+        printf("\tseed: optional seed for random number generator\n");
+        exit(1);
+    }
+    records = atoi(argv[1]);
+    if (records < 2) {
+        printf("genniput has invalid number records: %d\n", records);
+        exit(2);
+    }
+    list_type = atoi(argv[2]);
+    addr_range = records * 0.75;
+    if (argc == 4) {
+        int temp_seed = -1;
+        temp_seed = atoi(argv[3]);
+        if (temp_seed > 0)
+            seed = temp_seed;
+    }
+    printf("Seed %d\n", seed);
+    srand48(seed);
+
+    int i;
+    if (list_type == 1) {
+        // random addresses, 
+        for (i = 0; i < records; i++) {
+            if (i == records/4 || i == records/2 || i == 3*records/4) {
+                soc_id = records;
+            } else {
+                soc_id = (int) (addr_range * drand48()) + 1;
+            }
+            printf("pushback\n%d\n", soc_id);
+        }
+    }
+    else if (list_type == 2) {
+        // ascending addresses
+        for (i = 0; i < records; i++) {
+            printf("pushback\n%d\n", i+1);
+        }
+    }
+    else if (list_type == 3) {
+        // descending addresses
+        for (i = 0; i < records; i++) {
+            printf("pushback\n%d\n", records - i);
+        }
+    }
+    else {
+        printf("geninput has invalid list type: %d\n", list_type);
+        exit(3);
+    }
+    printf("sort\n");
+    printf("quit\n");
+    exit(0);
+}
+

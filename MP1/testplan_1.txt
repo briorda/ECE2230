@@ -1,0 +1,733 @@
+/* Name:   Austin Johnson
+   Login:  agjohns
+   Course: ECE2230
+   Assgn#: MP1
+   Purpose: A sequence of tests to run as standard input for the sequential list ADT. Each test is designed to 
+	      try to "break" the program in any way that it can.
+   Assumptions: These tests are designed with MINSOCKETS set to 4.
+*/
+
+
+TEST 1: Testing to see if able to erase, print or use at on an empty list.
+
+erase 0
+print
+at 0
+
+
+THEORETICAL RESULTS: The program should print that 0 is an invalid position to erase. It should also print that the 
+		       list is empty. Lastly it should print that 0 is an invalid postion because there is nothing
+		       stored at that position.
+
+ACTUAL RESULTS:
+
+
+
+TEST 2: Testing if able to insert into an invalid position. 
+
+insert -1 
+687
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+
+THEORETICAL RESULTS: The program should reject the insert as an invalid position. 
+
+ACTUAL RESULTS:
+
+
+
+TEST 3: Testing if entries are inserted and the number of entries increments.
+
+stats
+insert 0
+985
+0
+0
+0
+0
+0
+0
+0
+0
+0
+insert 1
+366
+1
+1
+1
+1
+1
+1
+1
+1
+1
+stats
+
+
+THEORETICAL RESULTS: The program should display that there are currently 0 records with a capacity equal to MINSOCKETS 
+		       (in this case it's equal to 4). It should then insert id 985 into position 0 and id 366 into position 1 
+		       properly and then display that there are 2 records with a capacity equal to 4.
+ 
+ACTUAL RESULTS: 
+
+
+
+TEST 4: Testing if entries are inserted properly and in sequential order. 
+ 
+insert 2
+423
+2
+2
+2
+2
+2
+2
+2
+2
+2
+insert 3
+234
+3
+3
+3
+3
+3
+3
+3
+3
+3
+insert 5
+452
+5
+5
+5
+5
+5
+5
+5
+5
+5
+
+
+THEORETICAL RESULTS: The program should insert id 423 into position 2 and id 234 into position 3 and reject insert id 452 into position 5
+		       as an invalid position.  
+
+ACTUAL RESULTS: 
+
+
+
+TEST 5: Testing if a record is replaced.
+
+at 0
+replace 0
+634
+4
+4
+4
+4
+4
+4
+4
+4
+4
+at 0
+
+
+THEORETICAL RESULTS: The program should display the socket info (socket id 985) currently at position 0. Next it should 
+		       replace position 0 with the new info (socket id 634) and display it.  
+
+ACTUAL RESULTS:
+
+
+
+TEST 6: Testing if a record is erased and that the number of entries decrements.
+
+stats
+erase 3
+at 3
+stats
+
+
+THEORETICAL RESULTS: The program should display that the current number of records is 4 with a capacity of 4. It should then erase 
+		       id 234 at position 3. Next it should try to display socket 3 but should fail because there is nothing to 
+		       display at that position. It should then display that there are 3 records with a capacity of 4. 
+
+ACTUAL RESULTS:
+
+
+
+TEST 7: Testing pushback functionality
+
+back
+pushback
+587
+5
+5
+5
+5
+5
+5
+5
+5
+5
+back
+
+
+THEORETICAL RESULTS: The program should display the last record's information (id 423). It should then push the new record (id 587)
+		       onto the end of the list and display the record at the end of the list to make sure it inserted properly. 
+
+ACTUAL RESULTS:
+
+
+
+TEST 8: Testing popback functionality
+
+back
+popback
+back
+
+
+THEORETICAL RESULTS: The program should display the last record's information (id 587). It should then pop that record from the list and 
+		       display the updated end of the list's record (id 423).
+
+ACTUAL RESULTS: 
+
+
+
+TEST 9: Testing all of the various print commands
+
+front
+at 0
+back
+at 2
+print
+
+
+THEORETICAL RESULTS: The program should display the front of the list's socket information (id 634) using the front command. It 
+		       should also display this same information when the at 0 command is run. Next it should display the back of the 
+		       list's socket information (id 423) using the back command. It should also display this same information when 
+		       the at 2 command is run. Lastly, it should print all of the current records (id 634, id 366, id 423).
+
+ACTUAL RESULTS: 
+
+
+
+TEST 10: Testing to see if the capacity of the records doubles if it cannot accomodate another record
+
+insert 3
+586
+3
+3
+3
+3
+3
+3
+3
+3
+3
+stats
+insert 4
+112
+4
+4
+4
+4
+4
+4
+4
+4
+4
+stats
+
+
+THEORETICAL RESULTS: The program should insert id 586 into position 3 properly. It should display that there are 4 records with a capacity of 4. 
+		       It should NOT double at this time because it has not tried to accomodate another record. It should then insert id 112 into
+		       position 4 properly. The capacity should double and it should display that there are 5 records with a capacity of 8.
+
+ACTUAL RESULTS:
+
+
+
+TEST 11: Testing to see if array is resized to half its current value when remaining records is less than one-fourth the array size
+
+erase 4
+erase 3
+stats
+erase 2
+stats
+erase 1
+stats
+
+
+THEORETICAL RESULTS: The program should erase records at positions 4 and 3 properly. It should then display that there are 3 records 
+		       with a capacity of 8. It should then erase 2 properly. It should then display that there are 2 records with a capacity 
+		       of 8. It should NOT half at this time because the remaining records are not LESS THAN one-fourth the capacity. It should 
+		       then erase 1 properly. The capacity should now half and it should display that there is 1 record with a capacity of 4.  
+
+ACTUAL RESULTS:
+
+
+
+TEST 12: Testing the shift functionality of the insert command
+
+insert 0
+686
+6
+6
+6
+6
+6
+6
+6
+6
+6
+insert 0
+712
+7
+7
+7
+7
+7
+7
+7
+7
+7
+front
+at 1
+back
+
+
+THEORETICAL RESULTS: The program should insert id 686 into position 0 and shift the socket that was previously in position 0 (id 634)
+		       to position 1. It should then insert id 712 into position 0 and shift the other records (id 686 and id 634) to 
+		       the next positions. It should then print the front of the list (id 712), middle of the list (id 686), and the back
+		       of the list (id 634) to verify proper shifting of records.
+
+ACTUAL RESULTS:
+
+
+ 
+TEST 13: Testing to see if array is reset to MINSOCKETS when remaining records is less than one-fourth the array size and MINSOCKETS is larger 
+	   than half of capacity.
+
+erase 2
+stats
+erase 1
+stats
+
+
+THEORETICAL RESULTS: The program should erase position 2 properly and then display that there are 2 records with a capacity of 4. It should then 
+		       erase position 1 properly. It should display that there is 1 record with a capacity of 4. The capacity is still 4 because 
+		       half of 4 is 2 which is less than MINSOCKETS so the array is reset to MINSOCKETS.
+
+ACTUAL RESULTS:
+
+
+
+TEST 14: Testing the shift functionality of the erase command
+
+insert 1
+109
+1
+1
+1
+1
+1
+1
+1
+1
+1
+insert 2
+723
+2
+2
+2
+2
+2
+2
+2
+2
+2
+insert 3
+441
+3
+3
+3
+3
+3
+3
+3
+3
+3
+front
+erase 0
+front
+at 3
+at 2
+
+
+THEORETICAL RESULTS: The program should insert id 109 into position 1, id 723 into position 2, and id 441 into position 3 properly. It should 
+		       then display the first record (id 712) in the list. Next it should erase the first record and shift all remaining records 
+		       to the left one position. Next it should print the new front of the list (id 109). Next it should try to display information 
+	   	       at position 3 but fail because the record at position 3 was moved to position 2. Lastly it should display the information 
+	               at position 2 (id 441) to verify proper shifting.
+
+ACTUAL RESULTS:
+
+
+
+TEST 15: STRESS TEST  
+
+
+insert 1
+123
+1
+1
+1
+1
+1
+1
+1
+1
+1
+insert 4
+494
+4
+4
+4
+4
+4
+4
+4
+4
+4
+stats
+insert 3
+300
+3
+3
+3
+3
+3
+3
+3
+3
+3
+insert 5
+500
+5
+5
+5
+5
+5
+5
+5
+5
+5
+insert 2
+292
+2
+2
+2
+2
+2
+2
+2
+2
+2
+insert 7
+707
+7
+7
+7
+7
+7
+7
+7
+7
+7
+stats
+insert 8
+812
+8
+8
+8
+8
+8
+8
+8
+8
+8
+insert 6
+665
+6
+6
+6
+6
+6
+6
+6
+6
+6
+insert 9
+990
+9
+9
+9
+9
+9
+9
+9
+9
+9
+insert 11
+114
+11
+11
+11
+11
+11
+11
+11
+11
+11
+insert 10
+109
+10
+10
+10
+10
+10
+10
+10
+10
+10
+insert 12
+122
+12
+12
+12
+12
+12
+12
+12
+12
+12
+insert 14
+141
+14
+14
+14
+14
+14
+14
+14
+14
+14
+insert 13
+133
+13
+13
+13
+13
+13
+13
+13
+13
+13
+stats
+popback
+popback
+popback
+popback
+popback
+popback
+popback
+popback
+popback
+popback
+stats
+pushback
+158
+15
+15
+15
+15
+15
+15
+15
+15
+15
+pushback
+169
+16
+16
+16
+16
+16
+16
+16
+16
+16
+pushback
+171
+17
+17
+17
+17
+17
+17
+17
+17
+17
+pushback
+180
+18
+18
+18
+18
+18
+18
+18
+18
+18
+pushback
+112
+19
+19
+19
+19
+19
+19
+19
+19
+19
+pushback
+202
+20
+20
+20
+20
+20
+20
+20
+20
+20
+pushback
+218
+21
+21
+21
+21
+21
+21
+21
+21
+21
+pushback
+221
+22
+22
+22
+22
+22
+22
+22
+22
+22
+pushback
+235
+23
+23
+23
+23
+23
+23
+23
+23
+23
+pushback
+248
+24
+24
+24
+24
+24
+24
+24
+24
+24
+stats
+print
+at 0
+back
+erase 0
+insert -1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+at -1
+erase 0
+erase 7
+erase 1
+erase 4
+erase 10
+erase 11
+erase 10
+popback
+popback
+popback
+popback
+erase 5
+erase 4
+popback
+stats
+front
+back
+print
+
+
+THEORETICAL RESULTS: The program should insert positions 1 - 14 properly. It should also display the stats every time the capacity doubles.
+		       Next it should popback 10 times and display that there are 7 records with a capacity of 16. Next it should pushback
+		       10 times and display that there are 17 records with a capacity of 32. Next it should print all of the current records,
+		       the first record (id 109) and the back record (id 248). Next it should erase at position 0 and attempt to insert and 
+		       display at position -1 but fail. Next it should erase at positions 0,7,1,4,10 and try to erase at position 11 but it 
+		       should print invalid position. Next it should erase at 10 and popback 4 times. Next it should erase at positions 5 and 
+		       4 and popback the last record. Lastly it should display the stats (should be 3 records with a capacity of 8), front of 
+		       the list (id 292), back of the list (id 441) and finally print all of the current records (should be 3).    
+
+ACTUAL RESULTS:
+
+
+
+TEST 16: Testing the quit command
+
+
+
+
+
+THEORETICAL RESULTS: The program should display "Goodbye" and then exit (below this comment block).
+
+ACTUAL RESULTS: 
+
+*NOTE: To verify TEST 16, run with valgrind and confirm that there are no memory leaks 
+	 valgrind --leak-check=full ./lab1 < testplan
+
+
+
+
+quit

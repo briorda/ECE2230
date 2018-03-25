@@ -1,0 +1,35 @@
+Seed: 1765640879
+Best-fit search policy using coalescing
+
+Equilibrium test driver using Mem_alloc and Mem_free from mem.c
+  Trials in equilibrium: 100000
+  Warmup allocations: 1000
+  Average array size: 128
+  Range for average array size: 127
+After warmup
+
+Free List Stats:
+Number of items: 59		Size of chunk_t (B): 16
+Min Size (B): 16		Max Size (B): 2480
+Average Size (B): 76		Total memory (B): 4512
+Total calls: 130			Total Pages: 130
+
+After exercise, time=237.152
+
+Free List Stats:
+Number of items: 119		Size of chunk_t (B): 16
+Min Size (B): 16		Max Size (B): 305920
+Average Size (B): 3471		Total memory (B): 413120
+Total calls: 152			Total Pages: 152
+
+After cleanup
+
+Free List Stats:
+Number of items: 1		Size of chunk_t (B): 16
+Min Size (B): 622592		Max Size (B): 622592
+Average Size (B): 622592		Total memory (B): 622592
+Total calls: 152			Total Pages: 152
+
+all memory is in the heap -- no leaks are possible
+----- End of equilibrium test -----
+

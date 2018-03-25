@@ -1,0 +1,109 @@
+        //UNIT DRIVER 0:
+        // test to remove leaves, 12 and 20, then internal nodes
+        // 8, 24, 40 with one child, then 16, 48 with two children
+        printf("\n***** UNIT DRIVER 0 *****");
+
+        const int ins[] = {32,16,8,24,4,12,20,28,48,40,56,44,42,46};	
+        const int del[] = {12,20,8,24,40,16,48}; 
+        unitDriver(ins, sizeof ins / sizeof(int),
+	        del, sizeof del / sizeof(int));
+
+
+        //UNIT DRIVER 1:
+        // test to remove (48) is missing its right-left 
+        // child and (16) is missing its left-right child
+        printf("\n***** UNIT DRIVER 1 *****");
+
+        const int ins1[] = {32,16,48,8,24,40,56,4,20,28,36,44,60};
+        const int del1[] = {16,48,32}; 
+        unitDriver(ins1, sizeof ins1 / sizeof(int),
+	        del1, sizeof del1 / sizeof(int));
+
+        const int ins1b[] = {32,16,48,8,24,40,56,4,12,28,36,52,60};
+        const int del1b[] = {16,48,32}; 
+        unitDriver(ins1b, sizeof ins1b / sizeof(int),
+	        del1b, sizeof del1b / sizeof(int)); 
+
+         
+        //UNIT DRIVER 2:
+        // test for deletion with many children
+        printf("\n***** UNIT DRIVER 2 *****");
+
+        const int ins2[] = {200,100,50,150,25,75,125,175,65,85,135,80,130,140,78,82};
+        const int del2[] = {100,85,125}; 
+        unitDriver(ins2, sizeof ins2 / sizeof(int),
+	        del2, sizeof del2 / sizeof(int));
+
+
+        //UNIT DRIVER 3:
+        // check replace for duplicate key
+        printf("\n***** UNIT DRIVER 3 *****");
+
+        const int ins3[] = {10, 10};
+        const int del3[] = {10}; 
+        unitDriver(ins3, sizeof ins3 / sizeof(int),
+	        del3, sizeof del3 / sizeof(int));
+          
+
+        //UNIT DRIVER 4:
+        // attempt to delete from empty tree
+        printf("\n***** UNIT DRIVER 4 *****");
+
+        const int ins4[] = {10};
+        const int del4[] = {10, 10};
+        unitDriver(ins4, sizeof ins4 / sizeof(int),
+	        del4, sizeof del4 / sizeof(int));
+          
+
+        //UNIT DRIVER 5:
+        // deletion without children
+        printf("\n***** UNIT DRIVER 5 *****");
+
+        const int ins5[] = {4, 2, 6};
+        const int del5[] = {2, 6, 4}; 
+        unitDriver(ins5, sizeof ins5 / sizeof(int),
+	        del5, sizeof del5 / sizeof(int));
+
+
+        //UNIT DRIVER 6:
+        // deleting an only child 
+        printf("\n***** UNIT DRIVER 6 *****");
+         
+        // only child is left child
+        const int ins6[] = {20, 10, 5, 3, 7};
+        const int del6[] = {10};  
+        unitDriver(ins6, sizeof ins6 / sizeof(int),
+	        del6, sizeof del6 / sizeof(int));
+
+        // only child is right child
+        const int ins6b[] = {2, 10, 5, 3, 7};
+        const int del6b[] = {10};  
+        unitDriver(ins6b, sizeof ins6b / sizeof(int),
+	        del6b, sizeof del6b / sizeof(int));
+
+
+        //UNIT DRIVER 7:
+        // Deleting the root of the tree --> only child
+        printf("\n***** UNIT DRIVER 7 *****");
+
+        const int ins7[] = {10, 5, 3, 7};
+        const int del7[] = {10};
+        unitDriver(ins7, sizeof ins7 / sizeof(int),
+	        del7, sizeof del7 / sizeof(int));
+            
+
+        //UNIT DRIVER 8:
+        // Deleting the root of the tree --> two children
+        printf("\n***** UNIT DRIVER 8 *****");
+
+        // Left side of the root contains only left children
+        const int ins_keys4l[] = {10, 5, 3, 15, 13, 17};
+        const int del_keys4l[] = {10}; 
+        unitDriver(ins_keys4l, sizeof ins_keys4l / sizeof(int),
+	        del_keys4l, sizeof del_keys4l / sizeof(int));
+
+        // Right side of the root contains only right children
+        const int ins_keys4r[] = {10, 5, 3, 15, 7, 17};
+        const int del_keys4r[] = {10}; 
+        unitDriver(ins_keys4r, sizeof ins_keys4r / sizeof(int),
+	        del_keys4r, sizeof del_keys4r / sizeof(int));

@@ -1,0 +1,75 @@
+TEST 1: Test full functionality of the UPDATE command. 
+ -> This test updates a record in the list having the same socket ID as multiple
+    other records in the list. 
+
+INSERT 111
+100
+111
+11
+80
+1
+4
+1
+1.1
+1
+INSERT 551 
+500
+550
+80
+21
+1
+5
+2
+5.7
+2
+INSERT 100 
+111
+100
+1500
+80
+80
+2
+1
+1.8
+3
+INSERT 551 
+501
+550
+80
+21
+1
+5
+2
+5.7
+4
+INSERT 551 
+502
+550
+80
+21
+1
+5
+2
+5.7
+5
+PRINT
+UPDATE 551 
+503
+550
+80
+21
+1
+5
+2
+5.7
+6
+PRINT
+stats
+
+ To determine if this test passes, record 551 recieved at time 2 should be 
+ updated with record 551 recieved at time 6. The times recieved of the 551
+ records should be 6, 3, 4, 5 respectively. If record 551 recieved at time
+ 6 is added to the end of the list, this test FAILS. 
+
+
+

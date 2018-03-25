@@ -1,0 +1,46 @@
+/* bst.h
+ * Austin Johnson
+ * agjohns
+ * Lab5: Binary Search Tree
+ * ECE 2230, Fall 2016
+ */
+
+enum balanceoptions {BST, AVL, TWOTHREET};
+
+typedef void* data_t;
+typedef int bst_key_t;
+
+typedef struct bst_node_tag {
+	data_t data_ptr;
+	bst_key_t key;
+	struct bst_node_tag *left;
+	struct bst_node_tag *right;
+} bst_node_t;
+
+typedef struct bst_tag {
+	bst_node_t *root;
+	int tree_policy;    //must be an balanceoptions
+	int tree_size;
+	int key_comp;
+} bst_t;
+
+
+
+//prototype definitions
+data_t bst_access (bst_t *tree, bst_key_t key);
+bst_t *bst_construct (int tree_policy);
+void bst_destruct (bst_t *tree);
+void bst_destruct_aux (bst_node_t *node);
+int bst_insert (bst_t *tree, bst_key_t key, data_t data);
+bst_node_t *bst_insert_aux (bst_t *tree, bst_node_t **node, bst_key_t key, data_t data);
+data_t bst_remove (bst_t *tree, bst_key_t key);
+bst_node_t *bst_remove_aux (bst_t *tree, bst_node_t *node, data_t *data, bst_key_t key);
+int bst_size (bst_t *tree);
+int bst_stats (bst_t *tree);
+int bst_int_path_len (bst_t *tree);
+int bst_int_path_len_aux (bst_node_t *node, int level);
+void bst_debug_print_tree (bst_t *tree);
+void ugly_print(bst_node_t *N, int level);
+void bst_debug_validate (bst_t *tree);
+int bst_debug_validate_rec (bst_node_t *N, int min, int max, int *count);
+

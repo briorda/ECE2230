@@ -1,0 +1,592 @@
+/*
+   Austin Johnson
+   MP7
+   Test Plan
+*/
+
+
+//UNIT DRIVER 0: Tests on an empty table
+
+Table size (11), load factor (0.9)
+Open addressing with linear probe sequence
+Seed: 1479774267
+
+----- Unit Driver 0 -----
+The table is empty.
+----- Passed Driver -----
+
+
+Table size (11), load factor (0.9)
+Open addressing with double hashing
+Seed: 1479774267
+
+----- Unit Driver 0 -----
+The table is empty.
+----- Passed Driver -----
+
+
+Table size (11), load factor (0.9)
+Separate chaining
+Seed: 1479774267
+
+----- Unit Driver 0 -----
+The table is empty.
+----- Passed Driver -----
+
+
+THEORETICAL RESULTS: This driver uses various functions from table.c to test
+		     an empty table. It has many assertions to test if they 
+		     if they are working correctly. All probe types should 
+		     run the driver, printing that the table is empty and 
+		     then display if it passed.
+
+ACTUAL RESULTS: Passed the test for each probe type.  
+
+
+
+
+
+
+
+
+
+
+// UNIT DRIVER 1: Tests on inserting, retrieving, and deleting from a table
+
+Table size (11), load factor (0.9)
+Open addressing with linear probe sequence
+Seed: 1479774267
+
+** Insertion Test **
+Inserting ashamil  Hash Index: 4   Probe Decrement: 1
+0: (null)	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: (null)	
+6: (null)	7: (null)	
+* indicates an entry is deleted
+
+Inserting cmcgeac  Hash Index: 7   Probe Decrement: 1
+0: (null)	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: (null)	
+6: (null)	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting harlanr  Hash Index: 6   Probe Decrement: 1
+0: (null)	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: (null)	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting agjohns  Hash Index: 6   Probe Decrement: 1
+0: (null)	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting cjlinds  Hash Index: 0   Probe Decrement: 1
+0: cjlinds	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting ceffing  Hash Index: 0   Probe Decrement: 1
+0: cjlinds	1: (null)	2: (null)	
+3: ceffing	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting bplangl  Hash Index: 6   Probe Decrement: 1
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting vchaney  Hash Index: 2   Probe Decrement: 1
+** Did not insert vchaney
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting btyre  Hash Index: 6   Probe Decrement: 1
+** Did not insert btyre
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting lucasv  Hash Index: 7   Probe Decrement: 1
+** Did not insert lucasv
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting mschul3  Hash Index: 6   Probe Decrement: 1
+** Did not insert mschul3
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+
+Table after insertion test:
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+** Retrieved Data **
+ashamil   0x5502220
+cmcgeac   0x55022c0
+harlanr   0x5502360
+agjohns   0x5502400
+cjlinds   0x55024a0
+ceffing   0x5502540
+bplangl   0x55025e0
+vchaney   (nil)
+btyre   (nil)
+lucasv   (nil)
+mschul3   (nil)
+
+** Deletion Test **
+Deleting ashamil  Hash Index: 4   Probe Decrement: 1
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	*4: (null)	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Deleting cmcgeac  Hash Index: 7   Probe Decrement: 1
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	*4: (null)	5: agjohns	
+6: harlanr	*7: (null)	
+* indicates an entry is deleted
+
+Deleting harlanr  Hash Index: 6   Probe Decrement: 1
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	*4: (null)	5: agjohns	
+*6: (null)	*7: (null)	
+* indicates an entry is deleted
+
+Deleting agjohns  Hash Index: 6   Probe Decrement: 1
+0: cjlinds	1: (null)	2: bplangl	
+3: ceffing	*4: (null)	*5: (null)	
+*6: (null)	*7: (null)	
+* indicates an entry is deleted
+
+Deleting cjlinds  Hash Index: 0   Probe Decrement: 1
+*0: (null)	1: (null)	2: bplangl	
+3: ceffing	*4: (null)	*5: (null)	
+*6: (null)	*7: (null)	
+* indicates an entry is deleted
+
+Deleting ceffing  Hash Index: 0   Probe Decrement: 1
+*0: (null)	1: (null)	2: bplangl	
+*3: (null)	*4: (null)	*5: (null)	
+*6: (null)	*7: (null)	
+* indicates an entry is deleted
+
+Deleting bplangl  Hash Index: 6   Probe Decrement: 1
+
+The table is empty.
+
+Deleting vchaney  Hash Index: 2   Probe Decrement: 1
+
+The table is empty.
+
+Deleting btyre  Hash Index: 6   Probe Decrement: 1
+
+The table is empty.
+
+Deleting lucasv  Hash Index: 7   Probe Decrement: 1
+
+The table is empty.
+
+Deleting mschul3  Hash Index: 6   Probe Decrement: 1
+
+The table is empty.
+
+
+Table after deletion test:
+The table is empty.
+
+==15646== HEAP SUMMARY:
+==15646==     in use at exit: 0 bytes in 0 blocks
+==15646==   total heap usage: 21 allocs, 21 frees, 388 bytes allocated
+==15646== 
+==15646== All heap blocks were freed -- no leaks are possible
+==15646== 
+==15646== For counts of detected and suppressed errors, rerun with: -v
+==15646== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+
+
+Table size (11), load factor (0.9)
+Open addressing with double hashing
+Seed: 1479774267
+
+** Insertion Test **
+Inserting ashamil  Hash Index: 4   Probe Decrement: 6
+0: (null)	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: (null)	
+6: (null)	7: (null)	
+* indicates an entry is deleted
+
+Inserting cmcgeac  Hash Index: 7   Probe Decrement: 1
+0: (null)	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: (null)	
+6: (null)	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting harlanr  Hash Index: 6   Probe Decrement: 7
+0: (null)	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: (null)	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting agjohns  Hash Index: 6   Probe Decrement: 1
+0: (null)	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting cjlinds  Hash Index: 0   Probe Decrement: 1
+0: cjlinds	1: (null)	2: (null)	
+3: (null)	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting ceffing  Hash Index: 0   Probe Decrement: 7
+0: cjlinds	1: ceffing	2: (null)	
+3: (null)	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting bplangl  Hash Index: 6   Probe Decrement: 1
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting vchaney  Hash Index: 2   Probe Decrement: 7
+** Did not insert vchaney
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting btyre  Hash Index: 6   Probe Decrement: 3
+** Did not insert btyre
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting lucasv  Hash Index: 7   Probe Decrement: 3
+** Did not insert lucasv
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Inserting mschul3  Hash Index: 6   Probe Decrement: 6
+** Did not insert mschul3
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+
+Table after insertion test:
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	4: ashamil	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+** Retrieved Data **
+ashamil   0x5502220
+cmcgeac   0x55022c0
+harlanr   0x5502360
+agjohns   0x5502400
+cjlinds   0x55024a0
+ceffing   0x5502540
+bplangl   0x55025e0
+vchaney   (nil)
+btyre   (nil)
+lucasv   (nil)
+mschul3   (nil)
+
+** Deletion Test **
+Deleting ashamil  Hash Index: 4   Probe Decrement: 6
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	*4: (null)	5: agjohns	
+6: harlanr	7: cmcgeac	
+* indicates an entry is deleted
+
+Deleting cmcgeac  Hash Index: 7   Probe Decrement: 1
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	*4: (null)	5: agjohns	
+6: harlanr	*7: (null)	
+* indicates an entry is deleted
+
+Deleting harlanr  Hash Index: 6   Probe Decrement: 7
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	*4: (null)	5: agjohns	
+*6: (null)	*7: (null)	
+* indicates an entry is deleted
+
+Deleting agjohns  Hash Index: 6   Probe Decrement: 1
+0: cjlinds	1: ceffing	2: (null)	
+3: bplangl	*4: (null)	*5: (null)	
+*6: (null)	*7: (null)	
+* indicates an entry is deleted
+
+Deleting cjlinds  Hash Index: 0   Probe Decrement: 1
+*0: (null)	1: ceffing	2: (null)	
+3: bplangl	*4: (null)	*5: (null)	
+*6: (null)	*7: (null)	
+* indicates an entry is deleted
+
+Deleting ceffing  Hash Index: 0   Probe Decrement: 7
+*0: (null)	*1: (null)	2: (null)	
+3: bplangl	*4: (null)	*5: (null)	
+*6: (null)	*7: (null)	
+* indicates an entry is deleted
+
+Deleting bplangl  Hash Index: 6   Probe Decrement: 1
+
+The table is empty.
+
+Deleting vchaney  Hash Index: 2   Probe Decrement: 7
+
+The table is empty.
+
+Deleting btyre  Hash Index: 6   Probe Decrement: 3
+
+The table is empty.
+
+Deleting lucasv  Hash Index: 7   Probe Decrement: 3
+
+The table is empty.
+
+Deleting mschul3  Hash Index: 6   Probe Decrement: 6
+
+The table is empty.
+
+
+Table after deletion test:
+The table is empty.
+
+==15666== HEAP SUMMARY:
+==15666==     in use at exit: 0 bytes in 0 blocks
+==15666==   total heap usage: 21 allocs, 21 frees, 388 bytes allocated
+==15666== 
+==15666== All heap blocks were freed -- no leaks are possible
+==15666== 
+==15666== For counts of detected and suppressed errors, rerun with: -v
+==15666== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+
+
+Table size (11), load factor (0.9)
+Separate chaining
+Seed: 1479774267
+
+** Insertion Test **
+Inserting ashamil  Hash Index: 4
+4: ashamil
+
+Inserting cmcgeac  Hash Index: 7
+4: ashamil
+7: cmcgeac
+
+Inserting harlanr  Hash Index: 6
+4: ashamil
+6: harlanr
+7: cmcgeac
+
+Inserting agjohns  Hash Index: 6
+4: ashamil
+6: agjohns -> harlanr
+7: cmcgeac
+
+Inserting cjlinds  Hash Index: 0
+0: cjlinds
+4: ashamil
+6: agjohns -> harlanr
+7: cmcgeac
+
+Inserting ceffing  Hash Index: 0
+0: ceffing -> cjlinds
+4: ashamil
+6: agjohns -> harlanr
+7: cmcgeac
+
+Inserting bplangl  Hash Index: 6
+0: ceffing -> cjlinds
+4: ashamil
+6: bplangl -> agjohns -> harlanr
+7: cmcgeac
+
+Inserting vchaney  Hash Index: 2
+0: ceffing -> cjlinds
+2: vchaney
+4: ashamil
+6: bplangl -> agjohns -> harlanr
+7: cmcgeac
+
+Inserting btyre  Hash Index: 6
+0: ceffing -> cjlinds
+2: vchaney
+4: ashamil
+6: btyre -> bplangl -> agjohns -> harlanr
+7: cmcgeac
+
+Inserting lucasv  Hash Index: 7
+0: ceffing -> cjlinds
+2: vchaney
+4: ashamil
+6: btyre -> bplangl -> agjohns -> harlanr
+7: lucasv -> cmcgeac
+
+Inserting mschul3  Hash Index: 6
+0: ceffing -> cjlinds
+2: vchaney
+4: ashamil
+6: mschul3 -> btyre -> bplangl -> agjohns -> harlanr
+7: lucasv -> cmcgeac
+
+
+Table after insertion test:
+0: ceffing -> cjlinds
+2: vchaney
+4: ashamil
+6: mschul3 -> btyre -> bplangl -> agjohns -> harlanr
+7: lucasv -> cmcgeac
+
+** Retrieved Data **
+ashamil   0x5502220
+cmcgeac   0x5502320
+harlanr   0x5502420
+agjohns   0x5502520
+cjlinds   0x5502620
+ceffing   0x5502720
+bplangl   0x5502820
+vchaney   0x5502920
+btyre   0x5502a20
+lucasv   0x5502b20
+mschul3   0x5502c20
+
+** Deletion Test **
+Deleting ashamil  Hash Index: 4
+0: ceffing -> cjlinds
+2: vchaney
+6: mschul3 -> btyre -> bplangl -> agjohns -> harlanr
+7: lucasv -> cmcgeac
+
+Deleting cmcgeac  Hash Index: 7
+0: ceffing -> cjlinds
+2: vchaney
+6: mschul3 -> btyre -> bplangl -> agjohns -> harlanr
+7: lucasv
+
+Deleting harlanr  Hash Index: 6
+0: ceffing -> cjlinds
+2: vchaney
+6: mschul3 -> btyre -> bplangl -> agjohns
+7: lucasv
+
+Deleting agjohns  Hash Index: 6
+0: ceffing -> cjlinds
+2: vchaney
+6: mschul3 -> btyre -> bplangl
+7: lucasv
+
+Deleting cjlinds  Hash Index: 0
+0: ceffing
+2: vchaney
+6: mschul3 -> btyre -> bplangl
+7: lucasv
+
+Deleting ceffing  Hash Index: 0
+2: vchaney
+6: mschul3 -> btyre -> bplangl
+7: lucasv
+
+Deleting bplangl  Hash Index: 6
+2: vchaney
+6: mschul3 -> btyre
+7: lucasv
+
+Deleting vchaney  Hash Index: 2
+6: mschul3 -> btyre
+7: lucasv
+
+Deleting btyre  Hash Index: 6
+6: mschul3
+7: lucasv
+
+Deleting lucasv  Hash Index: 7
+6: mschul3
+
+Deleting mschul3  Hash Index: 6
+
+The table is empty.
+
+
+Table after deletion test:
+The table is empty.
+
+==15681== HEAP SUMMARY:
+==15681==     in use at exit: 0 bytes in 0 blocks
+==15681==   total heap usage: 36 allocs, 36 frees, 681 bytes allocated
+==15681== 
+==15681== All heap blocks were freed -- no leaks are possible
+==15681== 
+==15681== For counts of detected and suppressed errors, rerun with: -v
+==15681== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
+
+
+
+THEORETICAL RESULTS: The test should insert regulary, duplicates (depending on
+		     the seed) and into a full table (if open addressing). If
+		     verbose is on, it should print the key being inserting 
+		     along with it's hash index and probe decrement value. It 
+		     should also print the table after each insertion/deletion.
+		     Each probe type should complete, displaying that the table 
+		     is empty at the end and there are no memory leaks. 
+
+ACTUAL RESULTS: Passed the test for all probe types
+
+
+
+
+
+
+
+
+
+
+// UNIT DRIVER 2: Test on double hashing with catastrophic table size
+
+Table size (11), load factor (0.9)
+Open addressing with linear probe sequence
+Seed: 1479774267
+
+----- Retrieve driver -----
+  Trials: 50000
+  Build table with 5 random keys
+build of random table failed code (-1) index (4) key (mbmurdo)
+
+
+
+THEORETICAL RESULTS: This test uses a small even number as the table size and shows 
+                     that combining double hashing with a non prime table size will
+                     result in not being able to insert the keys into the table. This
+		     is because it visits the same indexes each time, never reaching a
+		     an index that is NULL, even though the table is not full. It should
+                     exit with "build of random table failed code (-1) index () key ()" */
+
+ACTUAL RESULTS: Passed the test with a table size of 6 

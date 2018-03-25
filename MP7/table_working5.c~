@@ -1,0 +1,470 @@
+/* table.c               
+ * Austin Johnson 
+ * agjohns       
+ * ECE 2230 Fall 2016
+ * MP7
+ *
+ * Purpose: The purpose of this file is to provide functions
+ *          for lab7.c 
+ *
+ *
+ * Assumptions: 
+ *
+ *   
+ * Bugs:
+ *
+ *
+ */
+
+#define TRUE 1
+#define FALSE 0
+
+#define EMPTY_ENTRY -1
+#define OCC_ENTRY -2
+#define DEL_ENTRY -3 
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <assert.h>
+#include "table.h"
+
+
+/* GLOBAL VARIABLE USED FOR TESTING */
+int collisions = 0;
+
+/*  The empty table is created.  The table must be dynamically allocated and
+ *  have a total size of table_size.  The maximum number of (K, I) entries
+ *  that can be stored in the table is table_size-1.  For open addressing, 
+ *  the table is filled with a special empty key distinct from all other 
+ *  nonempty keys (e.g., NULL).  
+ *
+ *  the probe_type must be one of {LINEAR, DOUBLE, CHAIN}
+ *
+ *  Do not "correct" the table_size or probe decrement if there is a chance
+ *  that the combinaion of table size or probe decrement will not cover
+ *  all entries in the table.  Instead we will experiment to determine under
+ *  what conditions an incorrect choice of table size and probe decrement
+ *  results in poor performance.
+ */
+table_t *table_construct(int table_size, int probe_type) {
+
+	table_t *T = (table_t *) malloc(sizeof(table_t));
+	T->table_size = table_size;
+	T->probe_type = probe_type;
+	T->num_keys = 0;
+	T->num_probes = 0;
+	T->oa = (table_entry_t *) malloc(table_size*sizeof(table_entry_t));
+	T->sc = (sep_chain_t **) malloc(table_size*sizeof(sep_chain_t *));
+	int i;
+	for (i = 0; i < table_size; i++) {
+		T->oa[i].key = NULL;
+		T->oa[i].data_ptr = NULL;
+		T->oa[i].deleted = FALSE;		
+		T->sc[i] = NULL;
+	}
+	return T;
+}
+
+/*
+ * This is a hash function that implements the Shift-Add-XOR Hash
+ * Reference: http://eternallyconfuzzled.com/tuts/algorithms/jsw_tut_hashing.aspx
+ */
+unsigned hash(table_t *T, hashkey_t key) {
+	hashkey_t p = key;
+	unsigned hash_index = 0;
+	int i, length = strlen(key);
+
+	for (i = 0; i < length; i++) 
+	    hash_index ^= (hash_index << 5) + (hash_index >> 2) + p[i];
+	return hash_index % T->table_size;
+}
+
+/*
+ * This is a hash function that implements the prime hash if 
+ * double hashing is enabled
+ */
+unsigned double_hash(int hash_index) {
+	int step_size = 7 - hash_index % 7;
+	if (step_size <= 0) return 1; //step_size must be greater than 0
+	else if (step_size % 2 == 0) return step_size + 1; //must be odd
+	else return step_size;
+}
+
+/* Sequentially remove each table entry (K, I) and insert into a new
+ * empty table with size new_table_size.  Free the memory for the old table
+ * and return the pointer to the new table.  The probe type should remain
+ * the same.
+ *
+ * Do not rehash the table during an insert or delete function call.  Instead
+ * use drivers to verify under what conditions rehashing is required, and
+ * call the rehash function in the driver to show how the performance
+ * can be improved.
+ */
+table_t *table_rehash(table_t *T, int new_table_size) {
+
+
+	return NULL;
+} 
+
+
+/* returns number of entries in the table */
+int table_entries(table_t *T) {	
+	return T == NULL ? 0 : T->num_keys;
+}
+
+
+/* returns 1 if table is full and 0 if not full. 
+ * For separate chaining the table is never full
+ */
+int table_full(table_t *T) {
+	if (T == NULL || T->num_keys < T->table_size - 1) return 0;
+	return 1;
+}
+
+
+/* returns the number of table entries marked as deleted */
+int table_deletekeys(table_t *T) {
+	int i, deleted_keys = 0;
+	for (i = 0; i < T->table_size; i++) {
+		if (T->oa[i].deleted == TRUE) 
+			deleted_keys++;
+	}
+	return deleted_keys;
+}
+ 
+int classify_entry (table_entry_t entry) { 
+	if (entry.key == NULL && entry.deleted == FALSE) return EMPTY_ENTRY;
+	else if (entry.key == NULL && entry.deleted == TRUE) return DEL_ENTRY;
+	else return OCC_ENTRY;
+}
+
+/* Insert a new table entry (K, I) into the table provided the table is not
+ * already full.  
+ * Return:
+ *      0 if (K, I) is inserted, 
+ *      1 if an older (K, I) is already in the table (update with the new I), or 
+ *     -1 if the (K, I) pair cannot be inserted.
+ *
+ * Note that both K and I are pointers to memory blocks created by malloc()
+ */
+int table_insert(table_t *T, hashkey_t K, data_t I) {
+
+	//get hash table index
+	int hash_index = hash(T, K);
+	int step_size = double_hash(hash_index);
+
+	//Open Addressing
+	if (T->probe_type == 0 || T->probe_type == 1) {
+		if (table_full(T)) return -1;
+		T->num_probes = 1;
+		while (T->oa[hash_index].key != NULL && !T->oa[hash_index].deleted) {
+			collisions++;
+			T->num_probes += 2;
+			//if duplicate key is found update info
+			if (T->oa[hash_index].key == K) {
+				T->oa[hash_index].data_ptr = I;
+				return 1;
+			}
+			//move to another cell if current cell is full		
+			if (T->probe_type == 0) 
+				hash_index--;
+			else 
+				hash_index -= step_size;
+			//if reached the end of the table
+			if (hash_index < 0) 
+				hash_index += T->table_size; //wrap around
+		}
+		T->oa[hash_index].key = K;
+		T->oa[hash_index].data_ptr = I;
+		T->oa[hash_index].deleted = FALSE;
+		T->num_keys++;
+		return 0;	
+	}
+	//Separate Chaining
+	else if (T->probe_type == 2) {
+		T->num_probes = 0;
+		//check for a duplicate key
+		if (T->sc[hash_index] != NULL) {
+			T->num_probes++;
+			sep_chain_t *R = T->sc[hash_index];
+			while (R != NULL) {
+				collisions++;
+				T->num_probes++;
+				//if duplicate key is found update info
+				if (R->key == K) {
+					R->data_ptr = I;
+					return 1;
+				}
+				R = R->next;
+			}
+		}
+		sep_chain_t *link = (sep_chain_t *) malloc(sizeof(sep_chain_t));
+		link->key = K;
+    		link->data_ptr = I;
+    		link->next = T->sc[hash_index]; //insert at the head
+		T->sc[hash_index] = link;	
+		T->num_keys++;
+	}
+	return 0;
+}
+
+
+/* Delete the table entry (K, I) from the table.  Free the key in the table.
+ * Return:
+ *     pointer to I, or
+ *     null if (K, I) is not found in the table.  
+ *
+ * Be sure to free(K)
+ *
+ * See the note on page 490 in Standish's book about marking table entries for
+ * deletions when using open addressing.
+ */
+data_t table_delete(table_t *T, hashkey_t K) {
+
+	int hash_index = hash(T, K);
+	int step_size = double_hash(hash_index);
+	data_t data = NULL;
+
+	//Open Addressing
+	if (T->probe_type == 0 || T->probe_type == 1) {
+		//if key is at it's hash index --> return I
+		if (T->oa[hash_index].key == K) {
+			data = T->oa[hash_index].data_ptr;
+			free(T->oa[hash_index].key);
+			T->oa[hash_index].key = NULL;
+			T->oa[hash_index].deleted = TRUE;
+			T->num_keys--;
+		}
+		//if hash index collided with another	
+		else {
+			int curr_index;
+			if (T->probe_type == 0) 
+				curr_index = hash_index - 1; //linear
+			else 
+				curr_index = hash_index - step_size; //double 
+			//if reached the end of the table
+			if (curr_index < 0) 
+				curr_index += T->table_size; //wrap around
+			//search for key
+			while (classify_entry (T->oa[curr_index]) != EMPTY_ENTRY 
+				&& T->oa[curr_index].key != K && curr_index != hash_index) {
+				T->num_probes++;
+				if (T->probe_type == 0) 
+					curr_index--; //linear
+				else 
+					curr_index -= step_size; //double 
+				//if reached the end of the table
+				if (curr_index < 0) 
+					curr_index += T->table_size; //wrap around
+			}
+			//if found key and it's not deleted --> return I
+			if (classify_entry(T->oa[curr_index]) == OCC_ENTRY) {
+				data = T->oa[curr_index].data_ptr;
+				free(T->oa[curr_index].key);
+				T->oa[curr_index].key = NULL;
+				T->oa[curr_index].deleted = TRUE;
+				T->num_keys--;
+			}
+		}
+	}
+	//Separate Chaining 
+	else {
+		T->num_probes = 0;
+		sep_chain_t *prev = NULL;
+		sep_chain_t *curr = T->sc[hash_index];
+		while (curr != NULL) {
+			T->num_probes++;
+			if (curr->key == K) 
+				break;
+			prev = curr;
+			curr = curr->next;
+		}
+		//if head
+		if (curr == T->sc[hash_index]) 
+			T->sc[hash_index] = curr->next;
+		else
+			prev->next = curr->next;
+		data = curr->data_ptr;
+		free(curr);
+		T->num_keys--;
+	}
+	return data;
+} 
+
+
+/* Given a key, K, retrieve the pointer to the information, I, from the table,
+ * but do not remove (K, I) from the table.  Return NULL if the key is not
+ * found.
+ */
+data_t table_retrieve(table_t *T, hashkey_t K) {
+	
+	data_t data = NULL;
+	int hash_index = hash(T, K);
+	int step_size = double_hash(hash_index);
+
+	//Open Addressing
+	if (T->probe_type == 0 || T->probe_type == 1) {
+		//if key is not at it's hash index --> return NULL
+		T->num_probes = 2;
+		if (T->oa[hash_index].key == NULL)
+			data = NULL;
+		//if key is at it's hash index --> return I
+		else if (T->oa[hash_index].key == K) 
+				data = T->oa[hash_index].data_ptr;
+		//if hash index collided with another --> search for key	
+		else {
+			int curr_index;
+			if (T->probe_type == 0) 
+				curr_index = hash_index - 1; //linear
+			else 
+				curr_index = hash_index - step_size; //double 
+							//if reached the end of the table
+			if (curr_index < 0) 
+				curr_index += T->table_size; //wrap around
+			//search for key
+			while (classify_entry (T->oa[curr_index]) != EMPTY_ENTRY 
+				&& T->oa[curr_index].key != K && curr_index != hash_index) {
+				T->num_probes++;
+				if (T->probe_type == 0) 
+					curr_index--; //linear
+				else 
+					curr_index -= step_size; //double 
+				//if reached the end of the table
+				if (curr_index < 0) 
+					curr_index += T->table_size; //wrap around
+			}
+			if (classify_entry(T->oa[curr_index]) == OCC_ENTRY) 
+				data = T->oa[curr_index].data_ptr; 
+		}
+	}
+	//Separate Chaining 
+	else if (T->probe_type == 2) {
+		sep_chain_t *R = T->sc[hash_index];
+		T->num_probes = 0;
+		while (R != NULL) {
+			T->num_probes++;
+			if (R->key == K) {
+				T->num_probes++;
+				data = R->data_ptr;
+				break;
+			}
+			R = R->next;
+		}
+	}
+	return data;
+} 
+
+
+/* Free all information in the table, the table itself, and any additional
+ * headers or other supporting data structures.  
+ */
+void table_destruct(table_t *T) {
+	if (T->probe_type == 0 || T->probe_type == 1) {
+		int i;
+		for (i = 0; i < T->table_size; i++) {
+			free(T->oa[i].key);
+			free(T->oa[i].data_ptr);
+		}
+	}
+	else {
+		int i;
+		for (i = 0; i < T->table_size; i++) {
+		    	sep_chain_t *R = T->sc[i];
+		    	sep_chain_t *temp = NULL;
+			while (R != NULL) {
+				temp = R;
+				R = R->next;
+				free(temp->key);
+				free(temp->data_ptr);
+				free(temp);
+			}
+		}
+   	}
+	free(T->oa);
+	free(T->sc);
+	free(T);
+}
+
+
+/* The number of probes for the most recent call to table_retrieve,
+ * table_insert, or table_delete 
+ */
+int table_stats(table_t *T) {
+	return T->num_probes;
+}  
+
+
+/* This function is for testing purposes only.  Given an index position into
+ * the hash table return the value of the key if data is stored in this 
+ * index position.  If the index position does not contain data, then the
+ * return value must be zero.  Make the first
+ * lines of this function 
+ *       assert(0 <= index && index < table_size); 
+ *       assert(0 <= list_position); 
+ */
+hashkey_t table_peek(table_t *T, int index, int list_position) {
+	assert(0 <= index && index < T->table_size); 
+	assert(0 <= list_position); 
+	
+	if (T->probe_type == 0 || T->probe_type == 1) {
+		if (T->oa[index].key != NULL)
+			return T->oa[index].key;
+		else
+			return 0;
+	}
+	else {
+		if (T->sc[index] == NULL) return 0;
+		else {
+			int i = 0;
+			sep_chain_t *R = T->sc[index];
+			while (R != NULL) {
+				if (i == list_position) 	
+					return R->key;
+				i++;
+				R = R->next;
+			}
+			return 0;
+		}
+	}
+	return 0;		
+} 
+
+/* Print the table position and keys in a easily readable and compact format.
+ * Only useful when the table is small.
+ */
+void table_debug_print(table_t *T) {
+	int i, j, k;
+	//if the table is empty
+	if (T->num_keys == 0) 
+		printf("\nThe table is empty.\n");
+	//Open Addressing
+	else if (T->probe_type == 0 || T->probe_type == 1) {
+		if (T->table_size % 3 == 0) {
+			for (i=0, j=i+1, k=j+1; i<T->table_size-2; i+=3, j=i+1, k=j+1)
+				printf("%d: %s\t%d: %s\t%d: %s\n", i, T->oa[i].key, 
+						j, T->oa[j].key, k, T->oa[k].key);
+		}
+		else {
+			for (i=0, j=i+1, k=j+1; i<T->table_size-2; i+=3, j=i+1, k=j+1)
+				printf("%d: %s\t%d: %s\t%d: %s\n", i, T->oa[i].key, 
+						j, T->oa[j].key, k, T->oa[k].key);
+			printf("%d: %s\t%d: %s\n", i, T->oa[i].key, j, T->oa[j].key);
+		}	
+	}
+	//Separate Chaining
+	else {
+		for (i = 0; i < T->table_size; i++) {
+		    sep_chain_t *R = T->sc[i];
+		    if (R == NULL) continue;
+		    printf("%d: ", i);
+		    while (R->next != NULL) {
+		        printf("%s -> ", R->key);
+		        R = R->next;
+		    }
+		    printf("%s\n", R->key);
+		}
+	}
+	printf("Number of Collisions = %d\n", collisions);
+}

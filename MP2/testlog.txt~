@@ -1,0 +1,731 @@
+Welcome to lab2.
+# /* Name:   Austin Johnson
+#    Login:  agjohns
+#    Course: ECE2230
+#    Assgn#: MP2
+#    Purpose: A sequence of tests to run as standard input for the sequential list ADT. Each test is designed to 
+# 	      try to "break" the program in any way that it can. Tests 1-12 test the unsorted list, Tests 13-22 
+# 	      test the sorted list, and Test 23 exits the program. 
+#    Assumptions: This testplan should work with no errors as long as the input commands are correct -> i.e if you 
+# 		  INSERT id and follow with 11 numbers when the structure only contains 10. 
+# */
+# 
+# 
+# ********** UNSORTED LINKED LIST TEST BEGIN **********
+# 
+# 
+# TEST 1: Testing to see if able to erase, print or use at on an empty list.
+# 
+Did not remove: invalid position 0
+Unsorted list empty
+Did not print: invalid position 0
+# 
+# 
+# THEORETICAL RESULTS: The program should print that 0 is an invalid position to erase. It should also print that the 
+# 		       list is empty. Lastly it should print that 0 is an invalid postion because there is nothing
+# 		       stored at that position.
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 2: Testing if able to insert into an invalid position. 
+# 
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Rejected: 687 invalid position -1
+# 
+# 
+# THEORETICAL RESULTS: The program should reject the insert as an invalid position. 
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 3: Testing if entries are inserted and the number of entries increments.
+# 
+Unsorted number records: 0, Sorted number records: 0
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 985 into position 0
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 366 into position 1
+Unsorted number records: 2, Sorted number records: 0
+# 
+# 
+# THEORETICAL RESULTS: The program should display that there are currently 0 records. It should then insert id 985 
+# 		       into position 0 and id 366 into position 1 properly and then display that there are 2 records
+# 		       in the unsorted list and 0 records in the sorted list. 
+#  
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 4: Testing if inserting an entry greater than the number entries places it at the end of the list.  
+#  
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 423 into position 2
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 234 into position 3
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 452 into position 5
+# 
+# 
+# THEORETICAL RESULTS: The program should insert id 423 into position 2 and id 234 into position 3. It should then insert id 452 into position 4 
+# 		       although it will display that it inserted it into position 5. It displays this because I did not mess with the output of 
+# 		       the print statements in the lab2.c file per the mp2 instructions.  
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 5: Testing if a record is replaced.
+# 
+Record at position: 0
+Socket id: 985 Dest: 0, Src: 0, Dport: 0, Src: 0, Prot: 0, Fam: 0, St: 0 Rt: 0 Tm: 0
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Replaced: 985 with 634 into position 0
+Record at position: 0
+Socket id: 634 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+# 
+# 
+# THEORETICAL RESULTS: The program should display the socket info (socket id 985) currently at position 0. Next it should 
+# 		       replace position 0 with the new info (socket id 634) and display it.  
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 6: Testing if a record is erased and that the number of entries decrements.
+# 
+Unsorted number records: 5, Sorted number records: 0
+Erased: 234 from position 3
+Record at position: 3
+Socket id: 452 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+Unsorted number records: 4, Sorted number records: 0
+# 
+# 
+# THEORETICAL RESULTS: The program should display that the number of unsorted records is 5 and sorted records is 0. It should then 
+# 		       erase id 234 at position 3. Next it should display the socket (id 452) at position 3 to ensure proper deletion. 
+# 	               It should then display that there are 4 records in the unsorted list and 0 records in the sorted list.  
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 7: Testing pushback functionality
+# 
+Record at back:
+Socket id: 452 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 587 into position 4
+Record at back:
+Socket id: 587 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+# 
+# 
+# THEORETICAL RESULTS: The program should display the last record's information (id 452). It should then push the new record (id 587)
+# 		       onto the end of the list and display the record at the end of the list to make sure it inserted properly. 
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 8: Testing popback functionality
+# 
+Record at back:
+Socket id: 587 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+Popped: 587 from position 4
+Record at back:
+Socket id: 452 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+# 
+# 
+# THEORETICAL RESULTS: The program should display the last record's information (id 587). It should then pop that record from the list and 
+# 		       display the updated end of the list's record (id 452).
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 9: Testing all of the various print commands
+# 
+Record at front:
+Socket id: 634 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+Record at position: 0
+Socket id: 634 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+Record at back:
+Socket id: 452 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+Record at position: 3
+Socket id: 452 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+4 records in unsorted list
+   0: Socket id: 634 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+   1: Socket id: 366 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+   2: Socket id: 423 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+   3: Socket id: 452 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+# 
+# 
+# THEORETICAL RESULTS: The program should display the front of the list's socket information (id 634) using the front command. It 
+# 		       should also display this same information when the at 0 command is run. Next it should display the back of the 
+# 		       list's socket information (id 452) using the back command. It should also display this same information when 
+# 		       the at 3 command is run. Lastly, it should print all of the current records (id 634, id 366, id 423, id 452).
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 10: Testing the "shift" functionality of the insert command 
+# 
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 686 into position 0
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 712 into position 3
+Record at front:
+Socket id: 686 Dest: 6, Src: 6, Dport: 6, Src: 6, Prot: 6, Fam: 6, St: 6 Rt: 6 Tm: 6
+Record at position: 4
+Socket id: 423 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+Record at back:
+Socket id: 452 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+# 
+# 
+# THEORETICAL RESULTS: The program should insert id 686 into position 0 and "shift" the socket that was previously in position 0 (id 634)
+# 		       to position 1. It should then insert id 712 into position 3 and "shift" id 423 to position 4. It should then print 
+# 		       the front of the list (id 686), position 4 (id 423), and the back of the list (id 452) to verify proper shifting of records.
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 11: Testing the "shift" functionality of the erase command
+# 
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 109 into position 1
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 723 into position 2
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 441 into position 4
+Record at front:
+Socket id: 686 Dest: 6, Src: 6, Dport: 6, Src: 6, Prot: 6, Fam: 6, St: 6 Rt: 6 Tm: 6
+Erased: 686 from position 0
+Record at front:
+Socket id: 109 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+Did not print: invalid position 8
+Record at position: 2
+Socket id: 634 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+8 records in unsorted list
+   0: Socket id: 109 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+   1: Socket id: 723 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+   2: Socket id: 634 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+   3: Socket id: 441 Dest: 3, Src: 3, Dport: 3, Src: 3, Prot: 3, Fam: 3, St: 3 Rt: 3 Tm: 3
+   4: Socket id: 366 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+   5: Socket id: 712 Dest: 7, Src: 7, Dport: 7, Src: 7, Prot: 7, Fam: 7, St: 7 Rt: 7 Tm: 7
+   6: Socket id: 423 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+   7: Socket id: 452 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+# 
+# 
+# THEORETICAL RESULTS: The program should insert id 109 into position 1, id 723 into position 2, and id 441 into position 4 properly. It should 
+# 		       then display the first record (id 686) in the list. Next it should erase the first record and "shift" all remaining records 
+# 		       to the left one position. Next it should print the new front of the list (id 109). Next it should try to display information 
+# 	   	       at position 8 but fail because the record at position 8 was moved to position 7. Lastly it should display the information 
+# 	               at position 2 (id 634) to verify proper "shifting".
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 12: STRESS TEST  
+# 
+# 
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 123 into position 1
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 494 into position 4
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 300 into position 3
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 500 into position 5
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 292 into position 2
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 707 into position 7
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 812 into position 8
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 665 into position 6
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 990 into position 9
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 114 into position 11
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 109 into position 10
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 122 into position 12
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 141 into position 14
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Inserted: 133 into position 13
+22 records in unsorted list
+   0: Socket id: 109 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+   1: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+   2: Socket id: 292 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+   3: Socket id: 723 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+   4: Socket id: 300 Dest: 3, Src: 3, Dport: 3, Src: 3, Prot: 3, Fam: 3, St: 3 Rt: 3 Tm: 3
+   5: Socket id: 634 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+   6: Socket id: 665 Dest: 6, Src: 6, Dport: 6, Src: 6, Prot: 6, Fam: 6, St: 6 Rt: 6 Tm: 6
+   7: Socket id: 500 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+   8: Socket id: 707 Dest: 7, Src: 7, Dport: 7, Src: 7, Prot: 7, Fam: 7, St: 7 Rt: 7 Tm: 7
+   9: Socket id: 990 Dest: 9, Src: 9, Dport: 9, Src: 9, Prot: 9, Fam: 9, St: 9 Rt: 9 Tm: 9
+  10: Socket id: 109 Dest: 10, Src: 10, Dport: 10, Src: 10, Prot: 10, Fam: 10, St: 10 Rt: 10 Tm: 10
+  11: Socket id: 812 Dest: 8, Src: 8, Dport: 8, Src: 8, Prot: 8, Fam: 8, St: 8 Rt: 8 Tm: 8
+  12: Socket id: 122 Dest: 12, Src: 12, Dport: 12, Src: 12, Prot: 12, Fam: 12, St: 12 Rt: 12 Tm: 12
+  13: Socket id: 133 Dest: 13, Src: 13, Dport: 13, Src: 13, Prot: 13, Fam: 13, St: 13 Rt: 13 Tm: 13
+  14: Socket id: 114 Dest: 11, Src: 11, Dport: 11, Src: 11, Prot: 11, Fam: 11, St: 11 Rt: 11 Tm: 11
+  15: Socket id: 141 Dest: 14, Src: 14, Dport: 14, Src: 14, Prot: 14, Fam: 14, St: 14 Rt: 14 Tm: 14
+  16: Socket id: 494 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+  17: Socket id: 441 Dest: 3, Src: 3, Dport: 3, Src: 3, Prot: 3, Fam: 3, St: 3 Rt: 3 Tm: 3
+  18: Socket id: 366 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+  19: Socket id: 712 Dest: 7, Src: 7, Dport: 7, Src: 7, Prot: 7, Fam: 7, St: 7 Rt: 7 Tm: 7
+  20: Socket id: 423 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+  21: Socket id: 452 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+Popped: 452 from position 21
+Popped: 423 from position 20
+Popped: 712 from position 19
+Popped: 366 from position 18
+Popped: 441 from position 17
+Popped: 494 from position 16
+Popped: 141 from position 15
+Popped: 114 from position 14
+Popped: 133 from position 13
+Popped: 122 from position 12
+Unsorted number records: 12, Sorted number records: 0
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 158 into position 12
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 169 into position 13
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 171 into position 14
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 180 into position 15
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 112 into position 16
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 202 into position 17
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 218 into position 18
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 221 into position 19
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 235 into position 20
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Pushed: 248 into position 21
+Unsorted number records: 22, Sorted number records: 0
+22 records in unsorted list
+   0: Socket id: 109 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+   1: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+   2: Socket id: 292 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+   3: Socket id: 723 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+   4: Socket id: 300 Dest: 3, Src: 3, Dport: 3, Src: 3, Prot: 3, Fam: 3, St: 3 Rt: 3 Tm: 3
+   5: Socket id: 634 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+   6: Socket id: 665 Dest: 6, Src: 6, Dport: 6, Src: 6, Prot: 6, Fam: 6, St: 6 Rt: 6 Tm: 6
+   7: Socket id: 500 Dest: 5, Src: 5, Dport: 5, Src: 5, Prot: 5, Fam: 5, St: 5 Rt: 5 Tm: 5
+   8: Socket id: 707 Dest: 7, Src: 7, Dport: 7, Src: 7, Prot: 7, Fam: 7, St: 7 Rt: 7 Tm: 7
+   9: Socket id: 990 Dest: 9, Src: 9, Dport: 9, Src: 9, Prot: 9, Fam: 9, St: 9 Rt: 9 Tm: 9
+  10: Socket id: 109 Dest: 10, Src: 10, Dport: 10, Src: 10, Prot: 10, Fam: 10, St: 10 Rt: 10 Tm: 10
+  11: Socket id: 812 Dest: 8, Src: 8, Dport: 8, Src: 8, Prot: 8, Fam: 8, St: 8 Rt: 8 Tm: 8
+  12: Socket id: 158 Dest: 15, Src: 15, Dport: 15, Src: 15, Prot: 15, Fam: 15, St: 15 Rt: 15 Tm: 15
+  13: Socket id: 169 Dest: 16, Src: 16, Dport: 16, Src: 16, Prot: 16, Fam: 16, St: 16 Rt: 16 Tm: 16
+  14: Socket id: 171 Dest: 17, Src: 17, Dport: 17, Src: 17, Prot: 17, Fam: 17, St: 17 Rt: 17 Tm: 17
+  15: Socket id: 180 Dest: 18, Src: 18, Dport: 18, Src: 18, Prot: 18, Fam: 18, St: 18 Rt: 18 Tm: 18
+  16: Socket id: 112 Dest: 19, Src: 19, Dport: 19, Src: 19, Prot: 19, Fam: 19, St: 19 Rt: 19 Tm: 19
+  17: Socket id: 202 Dest: 20, Src: 20, Dport: 20, Src: 20, Prot: 20, Fam: 20, St: 20 Rt: 20 Tm: 20
+  18: Socket id: 218 Dest: 21, Src: 21, Dport: 21, Src: 21, Prot: 21, Fam: 21, St: 21 Rt: 21 Tm: 21
+  19: Socket id: 221 Dest: 22, Src: 22, Dport: 22, Src: 22, Prot: 22, Fam: 22, St: 22 Rt: 22 Tm: 22
+  20: Socket id: 235 Dest: 23, Src: 23, Dport: 23, Src: 23, Prot: 23, Fam: 23, St: 23 Rt: 23 Tm: 23
+  21: Socket id: 248 Dest: 24, Src: 24, Dport: 24, Src: 24, Prot: 24, Fam: 24, St: 24 Rt: 24 Tm: 24
+Record at position: 0
+Socket id: 109 Dest: 1, Src: 1, Dport: 1, Src: 1, Prot: 1, Fam: 1, St: 1 Rt: 1 Tm: 1
+Record at back:
+Socket id: 248 Dest: 24, Src: 24, Dport: 24, Src: 24, Prot: 24, Fam: 24, St: 24 Rt: 24 Tm: 24
+Erased: 109 from position 0
+Socket ID:Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Rejected: -1 invalid position -1
+Did not print: invalid position -1
+Erased: 123 from position 0
+Erased: 990 from position 7
+Erased: 723 from position 1
+Erased: 500 from position 4
+Erased: 180 from position 10
+Did not remove: invalid position 16
+Erased: 112 from position 10
+Popped: 248 from position 14
+Popped: 235 from position 13
+Popped: 221 from position 12
+Popped: 218 from position 11
+Erased: 109 from position 5
+Erased: 707 from position 4
+Popped: 202 from position 8
+Unsorted number records: 8, Sorted number records: 0
+Record at front:
+Socket id: 292 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+Record at back:
+Socket id: 171 Dest: 17, Src: 17, Dport: 17, Src: 17, Prot: 17, Fam: 17, St: 17 Rt: 17 Tm: 17
+8 records in unsorted list
+   0: Socket id: 292 Dest: 2, Src: 2, Dport: 2, Src: 2, Prot: 2, Fam: 2, St: 2 Rt: 2 Tm: 2
+   1: Socket id: 300 Dest: 3, Src: 3, Dport: 3, Src: 3, Prot: 3, Fam: 3, St: 3 Rt: 3 Tm: 3
+   2: Socket id: 634 Dest: 4, Src: 4, Dport: 4, Src: 4, Prot: 4, Fam: 4, St: 4 Rt: 4 Tm: 4
+   3: Socket id: 665 Dest: 6, Src: 6, Dport: 6, Src: 6, Prot: 6, Fam: 6, St: 6 Rt: 6 Tm: 6
+   4: Socket id: 812 Dest: 8, Src: 8, Dport: 8, Src: 8, Prot: 8, Fam: 8, St: 8 Rt: 8 Tm: 8
+   5: Socket id: 158 Dest: 15, Src: 15, Dport: 15, Src: 15, Prot: 15, Fam: 15, St: 15 Rt: 15 Tm: 15
+   6: Socket id: 169 Dest: 16, Src: 16, Dport: 16, Src: 16, Prot: 16, Fam: 16, St: 16 Rt: 16 Tm: 16
+   7: Socket id: 171 Dest: 17, Src: 17, Dport: 17, Src: 17, Prot: 17, Fam: 17, St: 17 Rt: 17 Tm: 17
+# 
+# 
+# THEORETICAL RESULTS: The program should insert positions 1 - 14 properly and print all of the records in the unsorted list (should be 22).
+# 		       Next it should popback 10 times and display that there are 12 records in the unsorted list and 0 in the sorted list. 
+# 		       Next it should pushback 10 times and display that there are 22 records in the unsorted list and 0 in the sorted list. 
+# 		       Next it should print all of the current records, the first record (id 109) and the back record (id 248). Next it should 
+# 		       erase at position 0 and attempt to insert and display at position -1 but fail. Next it should erase at positions 0,7,1,
+# 		       4,10 and try to erase at position 16 but it should print invalid position. Next it should erase at 10 and popback 4 times. 
+# 		       Next it should erase at positions 5 and 4 and popback the last record. Lastly it should display the stats (should be 8 
+# 		       records in the unsorted list and 0 in the sorted, front of the list (id 292), back of the list (id 171) and finally print 
+# 		       all of the current records: 292, 300, 634, 665, 812, 158, 169, and 171.    
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# ********** UNSORTED LINKED LIST TEST BEGIN **********
+# 
+# 
+# TEST 13: Testing to see if able to REMOVE, PRINT or LOOK on an empty list.
+# 
+Did not remove in sorted list: 1
+Sorted list empty
+Did not find in sorted list: 1
+# 
+# 
+# THEORETICAL RESULTS: The program should print that it did not remove 1. It should also print that the 
+# 		       list is empty. Lastly it should print that it did not find 1 because there is 
+# 		       nothing stored with that ID.
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 14: Testing if able to UPDATE an ID that isn't stored.
+# 
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Did not update in sorted list: 342
+# 
+# 
+# THEORETICAL RESULTS: The program should display that it didn't update ID 342 because it doesn't exist. 
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 15: Testing if entries are inserted properly and the number of entries increments.
+# 
+Unsorted number records: 8, Sorted number records: 0
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 123
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 456
+Unsorted number records: 8, Sorted number records: 2
+# 
+# 
+# THEORETICAL RESULTS: The program should display that there are 8 records in the unsorted list and 0 records
+# 		       in the sorted list. It should then INSERT 123 and 456 and display that there are 8 
+# 		       records in the unsorted list and 2 records in the sorted list. 
+#  
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 16: Testing if entries are organize by ascending order of IDs.
+# 
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 124
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 883
+4 records in sorted list
+   0: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 2, Prot: 2, Fam: 2, St: 3 Rt: 3 Tm: 3
+   1: Socket id: 124 Dest: 2, Src: 36, Dport: 43, Src: 3, Prot: 7, Fam: 3, St: 2 Rt: 87 Tm: 3
+   2: Socket id: 456 Dest: 4, Src: 4, Dport: 4, Src: 5, Prot: 5, Fam: 5, St: 6 Rt: 6 Tm: 6
+   3: Socket id: 883 Dest: 7, Src: 8, Dport: 11, Src: 43, Prot: 15, Fam: 2, St: 64 Rt: 2 Tm: 4
+# 
+# THEORETICAL RESULTS: The program should INSERT 124 and 883 into their correct locations. It should then PRINT the sorted list
+# 		       with IDs 123, 124, 456, and 883. 
+#  
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 17: Testing the LOOK and UPDATE command. 
+# 
+Found in sorted list: 124
+Socket id: 124 Dest: 2, Src: 36, Dport: 43, Src: 3, Prot: 7, Fam: 3, St: 2 Rt: 87 Tm: 3
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Updated sorted list: 124, old record
+Socket id: 124 Dest: 2, Src: 36, Dport: 43, Src: 3, Prot: 7, Fam: 3, St: 2 Rt: 87 Tm: 3
+Found in sorted list: 124
+Socket id: 124 Dest: 88, Src: 88, Dport: 88, Src: 88, Prot: 88, Fam: 88, St: 88 Rt: 88 Tm: 88
+# 
+# THEORETICAL RESULTS: The program should display the current information of id 124. It should then UPDATE id 124 to 
+# 		       include information with all 88's and should print the old and updated version.  
+#  
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 18: Testing placement if INSERT an ID that already exists.  
+# 
+4 records in sorted list
+   0: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 2, Prot: 2, Fam: 2, St: 3 Rt: 3 Tm: 3
+   1: Socket id: 124 Dest: 88, Src: 88, Dport: 88, Src: 88, Prot: 88, Fam: 88, St: 88 Rt: 88 Tm: 88
+   2: Socket id: 456 Dest: 4, Src: 4, Dport: 4, Src: 5, Prot: 5, Fam: 5, St: 6 Rt: 6 Tm: 6
+   3: Socket id: 883 Dest: 7, Src: 8, Dport: 11, Src: 43, Prot: 15, Fam: 2, St: 64 Rt: 2 Tm: 4
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 456
+5 records in sorted list
+   0: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 2, Prot: 2, Fam: 2, St: 3 Rt: 3 Tm: 3
+   1: Socket id: 124 Dest: 88, Src: 88, Dport: 88, Src: 88, Prot: 88, Fam: 88, St: 88 Rt: 88 Tm: 88
+   2: Socket id: 456 Dest: 4, Src: 4, Dport: 4, Src: 5, Prot: 5, Fam: 5, St: 6 Rt: 6 Tm: 6
+   3: Socket id: 456 Dest: 31, Src: 654, Dport: 33, Src: 2, Prot: 7, Fam: 47, St: 12 Rt: 3 Tm: 9
+   4: Socket id: 883 Dest: 7, Src: 8, Dport: 11, Src: 43, Prot: 15, Fam: 2, St: 64 Rt: 2 Tm: 4
+# 
+# THEORETICAL RESULTS: The program should PRINT the records in the sorted list. It should then INSERT id 456. Next it
+# 		       should PRINT the new list to make sure it placed new id 456 after the old id 456.   
+#  
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 19: Testing if a record is REMOVED and that the number of entries decrements.
+# 
+Unsorted number records: 8, Sorted number records: 5
+Removed from sorted list: 124
+Socket id: 124 Dest: 88, Src: 88, Dport: 88, Src: 88, Prot: 88, Fam: 88, St: 88 Rt: 88 Tm: 88
+Did not find in sorted list: 124
+Unsorted number records: 8, Sorted number records: 4
+# 
+# 
+# THEORETICAL RESULTS: The program should display that the number of unsorted records is 8 and sorted records is 5. It should then 
+# 		       REMOVE id 124. Next it try to LOOK for id 124 but should fail to find it. Lastly it should display that 
+# 	               there are 8 records in the unsorted list and 4 records in the sorted list.  
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 20: Testing UPDATE if multiple IDs match
+# 
+4 records in sorted list
+   0: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 2, Prot: 2, Fam: 2, St: 3 Rt: 3 Tm: 3
+   1: Socket id: 456 Dest: 4, Src: 4, Dport: 4, Src: 5, Prot: 5, Fam: 5, St: 6 Rt: 6 Tm: 6
+   2: Socket id: 456 Dest: 31, Src: 654, Dport: 33, Src: 2, Prot: 7, Fam: 47, St: 12 Rt: 3 Tm: 9
+   3: Socket id: 883 Dest: 7, Src: 8, Dport: 11, Src: 43, Prot: 15, Fam: 2, St: 64 Rt: 2 Tm: 4
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Updated sorted list: 456, old record
+Socket id: 456 Dest: 4, Src: 4, Dport: 4, Src: 5, Prot: 5, Fam: 5, St: 6 Rt: 6 Tm: 6
+4 records in sorted list
+   0: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 2, Prot: 2, Fam: 2, St: 3 Rt: 3 Tm: 3
+   1: Socket id: 456 Dest: 66, Src: 66, Dport: 66, Src: 66, Prot: 66, Fam: 66, St: 66 Rt: 66 Tm: 66
+   2: Socket id: 456 Dest: 31, Src: 654, Dport: 33, Src: 2, Prot: 7, Fam: 47, St: 12 Rt: 3 Tm: 9
+   3: Socket id: 883 Dest: 7, Src: 8, Dport: 11, Src: 43, Prot: 15, Fam: 2, St: 64 Rt: 2 Tm: 4
+# 
+# 
+# THEORETICAL RESULTS: The program should PRINT the list of sorted records. It should then UPDATE the first match with id 456 
+# 		       with information containing all 66s. It should then PRINT the list of sorted records to ensure first 
+# 		       id was updated properly. 
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# TEST 21: Testing REMOVE if multiple IDs match
+# 
+4 records in sorted list
+   0: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 2, Prot: 2, Fam: 2, St: 3 Rt: 3 Tm: 3
+   1: Socket id: 456 Dest: 66, Src: 66, Dport: 66, Src: 66, Prot: 66, Fam: 66, St: 66 Rt: 66 Tm: 66
+   2: Socket id: 456 Dest: 31, Src: 654, Dport: 33, Src: 2, Prot: 7, Fam: 47, St: 12 Rt: 3 Tm: 9
+   3: Socket id: 883 Dest: 7, Src: 8, Dport: 11, Src: 43, Prot: 15, Fam: 2, St: 64 Rt: 2 Tm: 4
+Removed from sorted list: 456
+Socket id: 456 Dest: 66, Src: 66, Dport: 66, Src: 66, Prot: 66, Fam: 66, St: 66 Rt: 66 Tm: 66
+Found in sorted list: 456
+Socket id: 456 Dest: 31, Src: 654, Dport: 33, Src: 2, Prot: 7, Fam: 47, St: 12 Rt: 3 Tm: 9
+3 records in sorted list
+   0: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 2, Prot: 2, Fam: 2, St: 3 Rt: 3 Tm: 3
+   1: Socket id: 456 Dest: 31, Src: 654, Dport: 33, Src: 2, Prot: 7, Fam: 47, St: 12 Rt: 3 Tm: 9
+   2: Socket id: 883 Dest: 7, Src: 8, Dport: 11, Src: 43, Prot: 15, Fam: 2, St: 64 Rt: 2 Tm: 4
+# 
+# 
+# THEORETICAL RESULTS: The program should PRINT the list of sorted records. It should then REMOVE the first match with id 456. 
+# 	   	       Next it should LOOK for id 456 and find the other match with id 456. Lastly it should PRINT the list 
+# 		       of sorted records to ensure proper deletion. 
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 22: STRESS TEST
+# 
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 754
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 555
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 112
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 398
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 907
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 2
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 114
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 637
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 567
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 755
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 555
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 555
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 1
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 1000
+Unsorted number records: 8, Sorted number records: 17
+Found in sorted list: 555
+Socket id: 555 Dest: 11, Src: 11, Dport: 11, Src: 11, Prot: 11, Fam: 11, St: 11 Rt: 11 Tm: 11
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Updated sorted list: 555, old record
+Socket id: 555 Dest: 11, Src: 11, Dport: 11, Src: 11, Prot: 11, Fam: 11, St: 11 Rt: 11 Tm: 11
+# 22
+Found in sorted list: 555
+Socket id: 555 Dest: 22, Src: 22, Dport: 22, Src: 22, Prot: 22, Fam: 22, St: 22 Rt: 22 Tm: 22
+Removed from sorted list: 2
+Socket id: 2 Dest: 93, Src: 3, Dport: 0, Src: 98, Prot: 23, Fam: 5, St: 345 Rt: 6 Tm: 89
+Removed from sorted list: 567
+Socket id: 567 Dest: 0, Src: 634, Dport: 2, Src: 5, Prot: 7, Fam: 3, St: 33 Rt: 57 Tm: 3
+Removed from sorted list: 398
+Socket id: 398 Dest: 23, Src: 98, Dport: 54, Src: 8, Prot: 3, Fam: 532, St: 67 Rt: 54 Tm: 6
+Removed from sorted list: 555
+Socket id: 555 Dest: 22, Src: 22, Dport: 22, Src: 22, Prot: 22, Fam: 22, St: 22 Rt: 22 Tm: 22
+Removed from sorted list: 1000
+Socket id: 1000 Dest: 542, Src: 7, Dport: 3, Src: 423, Prot: 686, Fam: 34, St: 2 Rt: 46 Tm: 7
+Did not remove in sorted list: -1
+Did not remove in sorted list: 222
+Removed from sorted list: 555
+Socket id: 555 Dest: 23, Src: 7456, Dport: 24, Src: 325, Prot: 6, Fam: 35, St: 2 Rt: 47 Tm: 4
+Removed from sorted list: 114
+Socket id: 114 Dest: 35, Src: 3436, Dport: 74, Src: 25, Prot: 7, Fam: 4, St: 7453 Rt: 5 Tm: 3
+10 records in sorted list
+   0: Socket id: 1 Dest: 12, Src: 423, Dport: 63, Src: 6, Prot: 3, Fam: 6, St: 7 Rt: 453 Tm: 1
+   1: Socket id: 112 Dest: 99, Src: 34, Dport: 90, Src: 245, Prot: 634, Fam: 78, St: 5 Rt: 68 Tm: 1
+   2: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 2, Prot: 2, Fam: 2, St: 3 Rt: 3 Tm: 3
+   3: Socket id: 456 Dest: 31, Src: 654, Dport: 33, Src: 2, Prot: 7, Fam: 47, St: 12 Rt: 3 Tm: 9
+   4: Socket id: 555 Dest: 45, Src: 234, Dport: 7, Src: 3, Prot: 45, Fam: 7, St: 234 Rt: 4 Tm: 12
+   5: Socket id: 637 Dest: 65, Src: 43, Dport: 67, Src: 3, Prot: 67, Fam: 4, St: 3 Rt: 56 Tm: 7
+   6: Socket id: 754 Dest: 12, Src: 43, Dport: 635, Src: 23, Prot: 565, Fam: 34, St: 745 Rt: 3 Tm: 54
+   7: Socket id: 755 Dest: 3, Src: 89, Dport: 444, Src: 33, Prot: 45, Fam: 2, St: 5 Rt: 7 Tm: 33
+   8: Socket id: 883 Dest: 7, Src: 8, Dport: 11, Src: 43, Prot: 15, Fam: 2, St: 64 Rt: 2 Tm: 4
+   9: Socket id: 907 Dest: 9, Src: 0, Dport: 2, Src: 4, Prot: 535, Fam: 43, St: 53 Rt: 2 Tm: 4
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 3
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 2021
+Dest IP address:Source IP address:Dest port number:Source port number:Protocol (TCP|UDP|SSL|RTP):Address family (IPv4|IPv6):State (EST|CLOSE_WAIT|CLOSED):Data rate:Time received (int):
+Added to sorted list: 40
+Found in sorted list: 907
+Socket id: 907 Dest: 9, Src: 0, Dport: 2, Src: 4, Prot: 535, Fam: 43, St: 53 Rt: 2 Tm: 4
+Removed from sorted list: 907
+Socket id: 907 Dest: 9, Src: 0, Dport: 2, Src: 4, Prot: 535, Fam: 43, St: 53 Rt: 2 Tm: 4
+Did not find in sorted list: 907
+Found in sorted list: 112
+Socket id: 112 Dest: 99, Src: 34, Dport: 90, Src: 245, Prot: 634, Fam: 78, St: 5 Rt: 68 Tm: 1
+Found in sorted list: 637
+Socket id: 637 Dest: 65, Src: 43, Dport: 67, Src: 3, Prot: 67, Fam: 4, St: 3 Rt: 56 Tm: 7
+Removed from sorted list: 3
+Socket id: 3 Dest: 42, Src: 56, Dport: 13, Src: 77, Prot: 777, Fam: 22, St: 3 Rt: 533 Tm: 6
+11 records in sorted list
+   0: Socket id: 1 Dest: 12, Src: 423, Dport: 63, Src: 6, Prot: 3, Fam: 6, St: 7 Rt: 453 Tm: 1
+   1: Socket id: 40 Dest: 31, Src: 34, Dport: 436, Src: 24, Prot: 7, Fam: 23, St: 32 Rt: 2 Tm: 9
+   2: Socket id: 112 Dest: 99, Src: 34, Dport: 90, Src: 245, Prot: 634, Fam: 78, St: 5 Rt: 68 Tm: 1
+   3: Socket id: 123 Dest: 1, Src: 1, Dport: 1, Src: 2, Prot: 2, Fam: 2, St: 3 Rt: 3 Tm: 3
+   4: Socket id: 456 Dest: 31, Src: 654, Dport: 33, Src: 2, Prot: 7, Fam: 47, St: 12 Rt: 3 Tm: 9
+   5: Socket id: 555 Dest: 45, Src: 234, Dport: 7, Src: 3, Prot: 45, Fam: 7, St: 234 Rt: 4 Tm: 12
+   6: Socket id: 637 Dest: 65, Src: 43, Dport: 67, Src: 3, Prot: 67, Fam: 4, St: 3 Rt: 56 Tm: 7
+   7: Socket id: 754 Dest: 12, Src: 43, Dport: 635, Src: 23, Prot: 565, Fam: 34, St: 745 Rt: 3 Tm: 54
+   8: Socket id: 755 Dest: 3, Src: 89, Dport: 444, Src: 33, Prot: 45, Fam: 2, St: 5 Rt: 7 Tm: 33
+   9: Socket id: 883 Dest: 7, Src: 8, Dport: 11, Src: 43, Prot: 15, Fam: 2, St: 64 Rt: 2 Tm: 4
+  10: Socket id: 2021 Dest: 543, Src: 76, Dport: 23, Src: 88, Prot: 3, Fam: 65, St: 0 Rt: 222 Tm: 1
+# 
+# 
+# THEORETICAL RESULTS: The program should INSERT 14 different IDs and place them in ascending order. It should display that there
+# 		       are 8 records in the unsorted list and 17 in the sorted list. Next it should LOOK for the first record 
+# 		       that matches id 555 (should find one containing all 11's). Next it should UPDATE id 555 from 11's to 22's. 
+# 		       It should then LOOK for id 555 to make sure it updated. It should then REMOVE 002, 567, 398, 555, and 1000. 
+#                      It should try to REMOVE -1 and 222 but should fail. Next it should REMOVE 555 and 114. It should then PRINT 
+# 		       the list (should contain 10 records). Next it should INSERT 003, 2021, and 40. It should LOOK for 907, REMOVE 907, 
+# 		       and then try to LOOK for it again but fail. It should then LOOK for 112 and 637 and find them in the list. Lastly, 
+# 		       it should REMOVE 003 and PRINT the list which should contain 11 records in ascending order.  
+# 
+# ACTUAL RESULTS: Passed the test. 
+# 
+# 
+# 
+# 
+# 
+# TEST 23: Testing the quit command
+# 
+# 
+# THEORETICAL RESULTS: The program should display "Goodbye" and then exit (below this comment block).
+# 
+# ACTUAL RESULTS: 
+# 
+# *NOTE: To verify TEST 23, run with valgrind and confirm that there are no memory leaks 
+# 	 valgrind --leak-check=full ./lab1 < testplan
+# 
+# 
+Goodbye

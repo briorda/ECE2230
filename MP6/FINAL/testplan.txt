@@ -1,0 +1,558 @@
+/*
+   Austin Johnson
+   ajgohns
+   MP6
+   Test Plan
+*/
+
+//TEST 1: User Input Errors with GraphType 1
+
+Seed: 1476379020
+Graph Type: Weakly-Connected with 7 Vertices
+Graph Operation: Dijkstra's Shortest Path Algorithm
+
+Invalid Operands: Use -s and -d to specify source and destination.
+
+
+Seed: 1476379020
+Graph Type: Weakly-Connected with 7 Vertices
+Graph Operation: Multiple Link-Disjoint Paths
+
+Invalid Operands: Use -s and -d to specify source and destination.
+
+THEORETICAL RESULTS: The program should print that the user needs to 
+ 		     specify the source and destination to run the 
+		     specified Graph Operation. 
+
+ACTUAL RESULTS: Passed the test.
+
+
+
+//TEST 2: User Input Errors with GraphType 2
+
+Seed: 1476379020
+Graph Type: Strongly-Connected with 7 Vertices
+Graph Operation: Dijkstra's Shortest Path Algorithm
+
+Invalid Operands: Use -s and -d to specify source and destination.
+
+
+Seed: 1476379020
+Graph Type: Strongly-Connected with 7 Vertices
+Graph Operation: Multiple Link-Disjoint Paths
+
+Invalid Operands: Use -s and -d to specify source and destination.
+
+THEORETICAL RESULTS: The program should print that the user needs to 
+ 		     specify the source and destination to run the 
+		     specified Graph Operation. 
+
+ACTUAL RESULTS: Passed the test.
+
+
+
+//TEST 3: User Input Errors with GraphType 3
+
+Seed: 1476379020
+Graph Type: Random Graph with 7 Vertices
+
+Invalid Operands: Use -a to specify number of adjacent vertices.
+
+
+Seed: 1476379020
+Graph Type: Random Graph with 7 Vertices
+Minimum Number of Adjacent Vertices: 0
+Maximum Number of Adjacent Vertices: 2
+Average Number of Adjacent Vertices: 1
+Graph Operation: Dijkstra's Shortest Path Algorithm
+
+Invalid Operands: Use -s and -d to specify source and destination.
+
+
+Seed: 1476379020
+Graph Type: Random Graph with 7 Vertices
+Minimum Number of Adjacent Vertices: 0
+Maximum Number of Adjacent Vertices: 2
+Average Number of Adjacent Vertices: 1
+Graph Operation: Multiple Link-Disjoint Paths
+
+Invalid Operands: Use -s and -d to specify source and destination.
+
+THEORETICAL RESULTS: The program should print that the user needs to 
+ 		     specify the number of adjacent vertices, the source
+		     vertex, and the destination vertex.  
+
+ACTUAL RESULTS: Passed the test.
+
+
+
+//TEST 4: Printing GraphType 1
+
+Seed: 1476379020
+Graph Type: Weakly-Connected with 7 Vertices
+
+Node #0 has links:
+
+
+
+Node #1 has links:
+
+1 --> 2 with weight 3
+1 --> 6 with weight 5
+
+
+Node #2 has links:
+
+2 --> 3 with weight 7
+2 --> 4 with weight 3
+2 --> 6 with weight 10
+
+
+Node #3 has links:
+
+3 --> 4 with weight 5
+3 --> 5 with weight 1
+
+
+Node #4 has links:
+
+4 --> 5 with weight 6
+
+
+Node #5 has links:
+
+5 --> 6 with weight 7
+
+
+Node #6 has links:
+
+6 --> 0 with weight 4
+6 --> 3 with weight 8
+6 --> 4 with weight 9
+
+
+THEORETICAL RESULTS: The program should print the weakly-connected graph 
+                     illustrated on the MP6 pdf.
+
+ACTUAL RESULTS: Passed the test.
+
+
+
+//TEST 5: Printing GraphType 2
+
+Seed: 1476379020
+Graph Type: Strongly-Connected with 7 Vertices
+
+Node #0 has links:
+
+0 --> 1 with weight 5
+0 --> 2 with weight 8
+0 --> 3 with weight 13
+0 --> 4 with weight 20
+0 --> 5 with weight 29
+0 --> 6 with weight 40
+
+
+Node #1 has links:
+
+1 --> 0 with weight 10
+1 --> 2 with weight 8
+1 --> 3 with weight 11
+1 --> 4 with weight 16
+1 --> 5 with weight 23
+1 --> 6 with weight 32
+
+
+Node #2 has links:
+
+2 --> 0 with weight 18
+2 --> 1 with weight 13
+2 --> 3 with weight 11
+2 --> 4 with weight 14
+2 --> 5 with weight 19
+2 --> 6 with weight 26
+
+
+Node #3 has links:
+
+3 --> 0 with weight 28
+3 --> 1 with weight 21
+3 --> 2 with weight 16
+3 --> 4 with weight 14
+3 --> 5 with weight 17
+3 --> 6 with weight 22
+
+
+Node #4 has links:
+
+4 --> 0 with weight 40
+4 --> 1 with weight 31
+4 --> 2 with weight 24
+4 --> 3 with weight 19
+4 --> 5 with weight 17
+4 --> 6 with weight 20
+
+
+Node #5 has links:
+
+5 --> 0 with weight 54
+5 --> 1 with weight 43
+5 --> 2 with weight 34
+5 --> 3 with weight 27
+5 --> 4 with weight 22
+5 --> 6 with weight 20
+
+
+Node #6 has links:
+
+6 --> 0 with weight 70
+6 --> 1 with weight 57
+6 --> 2 with weight 46
+6 --> 3 with weight 37
+6 --> 4 with weight 30
+6 --> 5 with weight 25
+
+
+THEORETICAL RESULTS: The program should print a strongly-connected graph with
+		     a 7 vertices. 
+
+ACTUAL RESULTS: Passed the test.
+
+
+
+//TEST 6: Printing GraphType 3
+
+Seed: 1476379020
+Graph Type: Random Graph with 7 Vertices
+Minimum Number of Adjacent Vertices: 0
+Maximum Number of Adjacent Vertices: 2
+Average Number of Adjacent Vertices: 1
+
+Node #0 has links:
+
+
+
+Node #1 has links:
+
+1 --> 2 with weight 2
+1 --> 6 with weight 4
+
+
+Node #2 has links:
+
+2 --> 1 with weight 2
+
+
+Node #3 has links:
+
+3 --> 5 with weight 1
+
+
+Node #4 has links:
+
+4 --> 5 with weight 4
+
+
+Node #5 has links:
+
+5 --> 3 with weight 1
+5 --> 4 with weight 4
+
+
+Node #6 has links:
+
+6 --> 1 with weight 4
+
+
+THEORETICAL RESULTS: The program should print a random graph with 
+		     7 vertices and approximately 3 adjacent neighbors 
+		     for each vertices. It is most likely disconnected.  
+
+ACTUAL RESULTS: Passed the test. The graph happened to be disconnected.
+
+
+
+//TEST 7: Graph 1 Dijkstra's Algorithm
+
+Seed: 1476379020
+Graph Type: Weakly-Connected with 7 Vertices
+Graph Operation: Dijkstra's Shortest Path Algorithm
+
+Shortest Path from 1 to 5:  1 --> 2 --> 3 --> 5
+Cost of the Path: 11
+
+Time Elapsed: 0.003 (ms)
+
+
+THEORETICAL RESULTS: The program should find a path from 1 to 5 
+	             with a cost of 11.
+
+ACTUAL RESULTS: Passed the test.
+
+
+
+//TEST 8: Graph 1 Network Diameter
+
+Seed: 1476379020
+Graph Type: Weakly-Connected with 7 Vertices
+Graph Operation: Network Diamater
+
+Network Diameter of the Graph: 21
+Path:  4 --> 5 --> 6 --> 3
+
+Time Elapsed: 0.008 (ms)
+
+
+THEORETICAL RESULTS: The program should find a path from 4 to 3 
+                     with a cost of 21.
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+//TEST 9: Graph 1 Multiple Link-Disjoint Paths
+
+Seed: 1476379020
+Graph Type: Weakly-Connected with 7 Vertices
+Graph Operation: Multiple Link-Disjoint Paths
+
+Multiple Link-Disjoint Paths From 1 to 5:
+
+Link-Disjoint Path 1:  1 --> 2 --> 3 --> 5
+Cost of the Path: 11
+
+Link-Disjoint Path 2:  1 --> 6 --> 4 --> 5
+Cost of the Path: 20
+
+No other path exists.
+
+Time Elapsed: 0.022 (ms)
+
+
+THEORETICAL RESULTS: The program should find the first shortest path
+		     from 1 to 5 with cost 11. It should then find the
+		     next shortest path from 1 to 5 with cost 20. 
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+//TEST 10: Graph 2 Dijkstra's Algorithm
+
+Seed: 1476379020
+Graph Type: Strongly-Connected with 7 Vertices
+Graph Operation: Dijkstra's Shortest Path Algorithm
+
+Shortest Path from 0 to 6:  0 --> 2 --> 6
+Cost of the Path: 34
+
+Time Elapsed: 0.009 (ms)
+
+
+THEORETICAL RESULTS: The program should find the shortest path from 0 to 6
+		     with a cost of 34. 
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+//TEST 11: Graph 2 Network Diameter
+
+Seed: 1476379020
+Graph Type: Strongly-Connected with 7 Vertices
+Graph Operation: Network Diamater
+
+Network Diameter of the Graph: 64
+Path:  6 --> 2 --> 0
+
+Time Elapsed: 0.031 (ms)
+
+
+THEORETICAL RESULTS: The program should find a path from 6 to 0 with a
+		     a diameter of 64. 
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+//TEST 12: Graph 2 Multiple Link-Disjoint Paths
+
+Seed: 1476379020
+Graph Type: Strongly-Connected with 7 Vertices
+Graph Operation: Multiple Link-Disjoint Paths
+
+Multiple Link-Disjoint Paths From 0 to 6:
+
+Link-Disjoint Path 1:  0 --> 2 --> 6
+Cost of the Path: 34
+
+Link-Disjoint Path 2:  0 --> 3 --> 6
+Cost of the Path: 35
+
+Link-Disjoint Path 3:  0 --> 1 --> 6
+Cost of the Path: 37
+
+Link-Disjoint Path 4:  0 --> 6
+Cost of the Path: 40
+
+Link-Disjoint Path 5:  0 --> 4 --> 6
+Cost of the Path: 40
+
+Link-Disjoint Path 6:  0 --> 5 --> 6
+Cost of the Path: 49
+
+No other path exists.
+
+Time Elapsed: 0.041 (ms)
+
+
+THEORETICAL RESULTS: The program should find NumPaths = NumVertices-1 -->
+		     It should find these paths starting from the lowest 
+                     cost and slowly increasing as the edges are removed. 
+
+ACTUAL RESULTS: Passed the test. There are 7 Vertices equalling 6 Paths. 
+                The cost of the paths is increasing as edges are removed.
+
+
+
+//TEST 13: Graph 3 Dijkstra's Algorithm with Disconnected Graph
+
+Seed: 1476379020
+Graph Type: Random Graph with 7 Vertices
+Minimum Number of Adjacent Vertices: 0
+Maximum Number of Adjacent Vertices: 2
+Average Number of Adjacent Vertices: 1
+Graph Operation: Dijkstra's Shortest Path Algorithm
+
+No path exists from 0 to 6.
+
+
+Time Elapsed: 0.005 (ms)
+
+
+THEORETICAL RESULTS: The program should not find a path from 0 to 6 because
+		     vertex 0 is disconnected from the graph. (-a3 was used)
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+//TEST 14: Graph 3 Dijkstra's Algorithm with Connected Graph
+
+Seed: 1476379020
+Graph Type: Random Graph with 7 Vertices
+Minimum Number of Adjacent Vertices: 1
+Maximum Number of Adjacent Vertices: 5
+Average Number of Adjacent Vertices: 2
+Graph Operation: Dijkstra's Shortest Path Algorithm
+
+Shortest Path from 0 to 6:  0 --> 5 --> 1 --> 6
+Cost of the Path: 10
+
+Time Elapsed: 0.003 (ms)
+
+
+THEORETICAL RESULTS: The program should find a path from 0 to 6 with a cost 
+		     of 10. (-a5 was used)
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+//TEST 15: Graph 3 Network Diameter with Disconnected Graph
+
+Seed: 1476379020
+Graph Type: Random Graph with 7 Vertices
+Minimum Number of Adjacent Vertices: 0
+Maximum Number of Adjacent Vertices: 2
+Average Number of Adjacent Vertices: 1
+Graph Operation: Network Diamater
+
+Network Diameter of the Graph: 6
+Path:  2 --> 1 --> 6
+
+The graph is not connected.
+Time Elapsed: 0.023 (ms)
+
+
+THEORETICAL RESULTS: The program should find a path from 2 to 6 with a 
+		     diameter of 6. The graph is probably not connected
+		     because -a3 was used.
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+//TEST 16: Graph 3 Network Diameter with Connected Graph
+
+Seed: 1476379020
+Graph Type: Random Graph with 7 Vertices
+Minimum Number of Adjacent Vertices: 1
+Maximum Number of Adjacent Vertices: 5
+Average Number of Adjacent Vertices: 2
+Graph Operation: Network Diamater
+
+Network Diameter of the Graph: 10
+Path:  0 --> 5 --> 1 --> 6
+
+Time Elapsed: 0.013 (ms)
+
+
+THEORETICAL RESULTS: The program should find a path from 0 to 6 with a 
+		     diameter of 10. The graph is probably connected 
+		     because -a5 was used. 
+
+ACTUAL RESULTS: Passed the test. 
+
+
+
+//TEST 17: Graph 3 Multiple Link-Disjoint Paths with Disconnected Graph
+
+Seed: 1476379020
+Graph Type: Random Graph with 7 Vertices
+Minimum Number of Adjacent Vertices: 0
+Maximum Number of Adjacent Vertices: 2
+Average Number of Adjacent Vertices: 1
+Graph Operation: Multiple Link-Disjoint Paths
+
+Multiple Link-Disjoint Paths From 0 to 6:
+
+No other path exists.
+
+Time Elapsed: 0.006 (ms)
+
+
+THEORETICAL RESULTS: The program should not find a path from 0 to 6 
+		     because 0 is disconnected from the graph. It 	
+		     should print that no path exists. (-a3 was used)
+
+
+
+//TEST 18: Graph 3 Multiple Link-Disjoint Paths with Connected Graph
+
+Seed: 1476379020
+Graph Type: Random Graph with 10 Vertices
+Minimum Number of Adjacent Vertices: 1
+Maximum Number of Adjacent Vertices: 5
+Average Number of Adjacent Vertices: 2
+Graph Operation: Multiple Link-Disjoint Paths
+
+Multiple Link-Disjoint Paths From 0 to 9:
+
+Link-Disjoint Path 1:  0 --> 5 --> 1 --> 9
+Cost of the Path: 10
+
+Link-Disjoint Path 2:  0 --> 8 --> 3 --> 1 --> 2 --> 9
+Cost of the Path: 17
+
+No other path exists.
+
+Time Elapsed: 0.008 (ms)
+
+
+THEORETICAL RESULTS: The program should find a path from 0 to 9 with a 
+		     cost of 10 and then it should find a path from 0
+		     to 9 with a cost of 17. It should say that no other
+		     path exists. (-n10 -a7 was used)
+
+ACTUAL RESULTS: Passed the test. 

@@ -1,0 +1,723 @@
+INSERT 1234
+1
+1
+1
+1
+1
+2
+3
+4
+5
+
+INSERT 4567
+3
+4
+6
+7
+8
+9
+7
+5
+3
+
+INSERT 123123
+3
+4
+5
+6
+7
+8
+9
+3
+3
+
+INSERT 901
+9
+0
+8
+7
+9
+0
+9
+0
+8
+
+INSERT 78945
+5
+6
+7
+4
+5
+6
+7
+5
+6
+
+INSERT 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+INSERT 1
+3
+4
+5
+6
+7
+8
+9
+0
+1
+
+INSERT 901
+4
+5
+6
+5
+4
+5
+6
+4
+5
+
+PRINT
+REMOVE 901
+PRINT
+quit
+
+To validate test 12 there should be 16 output's that state the record has been inputed to the list. The stats should then say there are 10 records in both the sorted and unsorted list. When the sorted list is printed it should print in the following order: 1, 1, 864, 901, 901, 901, 1234, 4567, 78945, and 123123. The unsorted list should contain records, 7, 44, 111, 2, 6, 222, 111, 333, 333, and 9.
+
+Test 12 passes. There are 16 output's and the stats are both 10 and the printed list match correctly.
+
+TEST 13: Validate the front and back command for a unsorted list and the look command for a sorted list. LOOK at what whould be the first item and the last.
+
+front
+back
+
+LOOK 1
+LOOK 123123
+
+To validate test 13 the record at the front should be 7, at the back should be 9. The look command should print record 1 and record 123123.
+
+Test 13 passes. It prints record 7 and 9 for front and back and it prints record 1 and 123123 from the sorted list.
+
+TEST 14: replace items at position 2,4,8 in the unsorted list and UPDATE items 901, 1234, and 123123 in the sorted list.
+
+replace 2
+6
+6
+6
+6
+6
+6
+6
+6
+6
+6
+
+replace 4
+123
+123
+123
+123
+123
+123
+123
+123
+123
+123
+123
+
+replace 8
+4
+4
+4
+4
+4
+4
+4
+4
+4
+4
+
+UPDATE 901
+5
+5
+5
+5
+5
+5
+5
+5
+5
+
+UPDATE 1234
+6
+6
+6
+6
+6
+6
+6
+6
+6
+
+UPDATE 123123
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+print
+PRINT
+
+To validate test 14,  the output should contain 3 replace outputs for the unsorted list and 3 update outputs for the sorted list. When both list are printed the updated and replaced records should match what was inserted.
+
+Test 14 passes. There are 3 replace outputs and 3 update outputs. All records were correclty updated and replaced.
+
+
+TEST 15: REMOVE record 901 from the sorted list and erase record 5 from  the unsorted list and print results.
+
+REMOVE 901
+
+To validate test 15, should state it removed record 901 and erased the record in position 5. Then print the results. Those records should no longer be there.
+
+Test 15 passes. It erased 901 and erased 222 from position 5. When it printed the records they were no longer there.
+
+
+quit
+
+
+
+
+TEST 16: Insert about  20 more items in to each list to get to 30 items and print the stats
+
+insert 0
+6
+4
+32
+3
+5
+3
+3
+4
+3
+
+insert 1
+222
+12
+22
+4
+5
+2
+4
+2
+1
+1
+pushback
+333
+6
+5
+3
+3
+2
+4
+2
+3
+3
+insert 0
+111
+5
+5
+5
+5
+5
+4
+3
+4
+3
+
+insert 1
+2
+2
+3
+2
+3
+2
+3
+2
+3
+2
+
+pushback
+9
+9
+9
+9
+9
+9
+9
+9
+9
+9
+
+insert 0
+7
+7
+7
+7
+7
+7
+7
+7
+7
+7
+
+insert 1
+44
+13
+66
+77
+8855
+44
+4
+1
+100
+2
+
+INSERT 1234
+1
+1
+1
+1
+1
+2
+3
+4
+5
+
+INSERT 4567
+3
+4
+6
+7
+8
+9
+7
+5
+3
+
+INSERT 123123
+3
+4
+5
+6
+7
+8
+9
+3
+3
+
+INSERT 901
+9
+0
+8
+7
+9
+0
+9
+0
+8
+
+INSERT 78945
+5
+6
+7
+4
+5
+6
+7
+5
+6
+
+INSERT 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+INSERT 1
+3
+4
+5
+6
+7
+8
+9
+0
+1
+
+INSERT 901
+4
+5
+6
+5
+4
+5
+6
+4
+5
+
+INSERT 888
+4
+4
+4
+4
+4
+4
+4
+4
+4
+
+INSERT 0101
+4
+3
+2
+3
+2
+3
+2
+3
+2
+insert 0
+6
+4
+32
+3
+5
+3
+3
+4
+3
+
+insert 1
+222
+12
+22
+4
+5
+2
+4
+2
+1
+1
+pushback
+333
+6
+5
+3
+3
+2
+4
+2
+3
+3
+insert 0
+111
+5
+5
+5
+5
+5
+4
+3
+4
+3
+
+insert 1
+2
+2
+3
+2
+3
+2
+3
+2
+3
+2
+
+pushback
+9
+9
+9
+9
+9
+9
+9
+9
+9
+9
+
+insert 0
+7
+7
+7
+7
+7
+7
+7
+7
+7
+7
+
+insert 1
+44
+13
+66
+77
+8855
+44
+4
+1
+100
+2
+
+pushback
+3
+3
+3
+3
+3
+3
+3
+3
+3
+3
+
+pushback
+6
+6
+6
+6
+6
+6
+6
+6
+6
+6
+
+insert 8
+3
+3
+3
+3
+3
+3
+3
+3
+3
+3
+
+insert 2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+
+insert 9
+5
+5
+5
+5
+5
+5
+5
+5
+5
+
+
+
+INSERT 1234
+1
+1
+1
+1
+1
+2
+3
+4
+5
+
+INSERT 4567
+3
+4
+6
+7
+8
+9
+7
+5
+3
+
+INSERT 123123
+3
+4
+5
+6
+7
+8
+9
+3
+3
+
+INSERT 901
+9
+0
+8
+7
+9
+0
+9
+0
+8
+
+INSERT 78945
+5
+6
+7
+4
+5
+6
+7
+5
+6
+
+INSERT 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+INSERT 1
+3
+4
+5
+6
+7
+8
+9
+0
+1
+
+INSERT 901
+4
+5
+6
+5
+4
+5
+6
+4
+5
+
+INSERT 888
+4
+4
+4
+4
+4
+4
+4
+4
+4
+
+INSERT 0101
+4
+3
+2
+3
+2
+3
+2
+3
+2
+
+INSERT 2292
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+
+
+stats
+
+To verify test 16, there should be a total of 42 outputs where it inserted into either the sorted or unsorted list. The stats should then say there are 30 records in both the sorted and unsorted list.
+
+Test 16 passes. There are 42 outputs stating it inserted and there are 30 records in both the sorted and unsorted list.
+
+
+TEST 17: Use the popback command and the REMOVE command to remove and item from each list.
+
+popback
+
+REMOVE 123123
+
+print
+PRINT 
+stats
+
+To verify test 17, the output should say if popped 6 from position 29 which is the last position in the list and it removed 123123 from the sorted list. When the list are printed both records should be gone. The stats should now say there are 29 records in both list.
+
+Test 17 passes. It states that it popped 6 from position 29 and removed 123123 from the sorted list. Both records were gone when printed.
+
+TEST 18: Test the at command on a larger list.
+
+at 8
+
+To verify test 18, the record at 8 should be 44.
+
+Test 18 passes. Record 44 was printed.
+
+TEST 19: Quit
+
+quit
+
+to verify test 8, run with valgrind and confirm there are no memory leaks
+    valgrind --leak-check=full ./lab1 < testinput
+
+Test 19 passes, the program quit with no memory leaks or errors.
+
+

@@ -1,0 +1,75 @@
+Prof. Harlan Russell
+ECE 2230, MP2, Fall 2016
+testinput_sorted
+
+Test script to show a few simple tests for the sorted list.
+
+TEST 1:  Add three entries to list.  
+
+INSERT 111
+100
+111
+11
+80
+1
+4
+1
+1.1
+1
+INSERT 551 
+500
+550
+80
+21
+1
+5
+2
+5.7
+2
+INSERT 100 
+111
+100
+1500
+80
+80
+2
+1
+1.8
+3
+
+TEST 2: Print the list and verify three entries are sorted 
+
+PRINT
+
+TEST 3:  Add a second 111 entry in the list
+
+INSERT 111
+101
+112
+12
+81
+2
+5
+2
+1.2
+4
+
+TEST 4: Print the list, verify two entrys for 111, and four total entries
+
+PRINT
+
+TEST 5: Look for an ID in the list and an ID not in the list
+
+LOOK 111
+LOOK 1
+
+TEST 6: Remove the last element in the list 
+
+REMOVE 551
+PRINT
+stats
+
+TEST 7: Quit
+
+quit
+

@@ -1,0 +1,267 @@
+/* 
+
+Writing and debugging MP2 is challenging, and it is particularly hard if you
+try and write all the code before you do any testing. It is much easier to
+break the problem into small pieces and test each piece.
+
+For MP2, one approach is to write list_insert first, since it might be the
+easiest algorithm and it depends only on list_construct.
+
+   For testing, we use a simple main function in this file.  This file is for
+   testing only, and you will NOT submit it as it is for your personal testing
+   during development.
+
+Below are a few simple examples that allocates a few structures and inserts 
+them into a list.
+
+With this file, you can compile and run list.c on its own using 
+
+   gcc -Wall -g testlist.c list.c soc_support.c -o testlist
+
+Or, I have added the compiling commands to the makefile, so do
+   make testlist
+
+Do this testing before you make ANY changes to soc_support.c.  The only 
+reason we need to compile soc_support.c is for the soc_compare function.
+The linker needs to find the comp_proc function and it is found in the template
+   soc_support.c file (with no changes) 
+*/
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <assert.h>
+
+#include "datatypes.h"
+#include "list.h"
+#include "soc_support.h"
+
+/* prototype for list debug print */
+void list_debug_print(list_t *list_ptr);
+
+int main(void)
+{
+    data_t *datap = NULL;
+    list_t *Lptr = NULL;
+
+    Lptr = list_construct(soc_compare, soc_compare_qsort);
+
+    // create one item to test list_insert
+    datap = (data_t *) calloc(1, sizeof(data_t));
+    datap->socket_id = 555;
+    list_insert(Lptr, datap, 0);
+    datap = NULL;
+
+    // create one item to test list_insert
+    datap = (data_t *) calloc(1, sizeof(data_t));
+    datap->socket_id = 444;
+    list_insert(Lptr, datap, 1);
+    datap = NULL;
+
+    // create one item to test list_insert
+    datap = (data_t *) calloc(1, sizeof(data_t));
+    datap->socket_id = 222;
+    list_insert(Lptr, datap, 2);
+    datap = NULL;
+
+    //Next try to use list_debug_print 
+    printf("\nHere is the unsorted list\n\n");
+    list_debug_print(Lptr);
+
+    // you should repeat the above tests with differents insertion orders
+
+    // next you may want to work on list_insert_sorted, so replace the above
+    // list_insert commands with list_insert_sorted
+ 
+    // after the insertion functions work, you can try the find command
+ 
+    // Uncomment this section to test list_elem_find 
+    /*********************************************************************
+    int position = -9876;
+    data_t template;
+    template.socket_id = 444;
+    data_t *foundp = list_elem_find(Lptr, &template, &position);
+    printf("\nTest of list elem find\n");
+    if (foundp != NULL) {
+        printf("looked for %d and found %d in position %d\n",
+            template.socket_id, foundp->socket_id, position);
+        if (template.socket_id != foundp->socket_id) {
+            printf("ERROR: returned pointer to wrong record\n");
+        }
+        if (position < -1) {
+            printf("ERROR: did not set position\n");
+        }
+    } else {
+        printf("looked for %d and did not find. Is this an error? \n", 
+            template.socket_id);
+    }
+    */
+
+
+    // End of tests with unsorted list
+ 
+    // Uncomment this section to try some tests on a sorted list 
+    list_t *Lsortptr = list_construct(soc_compare, soc_compare_qsort);
+
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 23;
+    list_insert_sorted(Lsortptr, datap);
+
+    // add a second item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 7;
+    list_insert_sorted(Lsortptr, datap);
+
+    // add a third item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 15;
+    list_insert_sorted(Lsortptr, datap);
+
+    // add a fourth item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 12;
+    list_insert_sorted(Lsortptr, datap);
+
+    // add a fifth item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 19;
+    list_insert_sorted(Lsortptr, datap);
+
+    printf("\nHere is the 1st sorted list\n\n");
+    list_debug_print(Lsortptr);
+
+
+
+    list_t *Lsortptr2 = list_construct(soc_compare, soc_compare_qsort);
+
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 12;
+    list_insert_sorted(Lsortptr2, datap);
+
+    // add a second item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 27;
+    list_insert_sorted(Lsortptr2, datap);
+
+    // add a third item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 8;
+    list_insert_sorted(Lsortptr2, datap);
+
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 12;
+    list_insert_sorted(Lsortptr2, datap);
+
+    // add a second item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 27;
+    list_insert_sorted(Lsortptr2, datap);
+
+    // add a third item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 8;
+    list_insert_sorted(Lsortptr2, datap);
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 12;
+    list_insert_sorted(Lsortptr2, datap);
+
+    // add a second item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 27;
+    list_insert_sorted(Lsortptr2, datap);
+
+    // add a third item
+    datap = (data_t *) calloc(1,sizeof(data_t));
+    datap->socket_id = 8;
+    list_insert_sorted(Lsortptr2, datap);
+
+    printf("\nHere is the 2nd sorted list\n\n");
+    list_debug_print(Lsortptr2);
+
+
+
+ 
+    /*test insertion sort
+    Lptr = insertion_sort(Lptr);
+    printf("\nHere is the insertion sorted list\n\n");
+    list_debug_print(Lptr);*/
+
+    /*test find min 
+    data_t *min = NULL;
+    min = FindMin (Lptr, Lptr->ll_head, Lptr->ll_tail);
+    printf("\nMin of the sorted list: %d\n", min->socket_id);
+
+    //test selection sort
+    selection_sort(Lptr, Lptr->ll_head, Lptr->ll_tail);
+    printf("\nHere is the recursive sorted list\n\n");
+    list_debug_print(Lptr);*/
+
+    /*test iterative sort
+    iterative_sort(Lptr, Lptr->ll_head, Lptr->ll_tail);
+    printf("\nHere is the iterative sorted list\n\n");
+    list_debug_print(Lptr);*/
+
+   
+    /*test splitting list
+    list_t *front_half = list_construct(soc_compare, soc_compare_qsort);
+    list_t *back_half = list_construct(soc_compare, soc_compare_qsort);
+    split_list(Lptr, &front_half, &back_half);
+    printf("\nHere is the split list\n\n");
+    list_debug_print(front_half);
+    printf("\n");
+    list_debug_print(back_half);
+
+    //test merging two lists
+    list_t *merged_list = list_construct(soc_compare, soc_compare_qsort);
+    merge_two_lists (&merged_list, Lsortptr, Lsortptr2);
+    printf("\nHere is the merged list\n\n");
+    list_debug_print(merged_list);*/
+
+
+    //test merge sort
+    merge_sort (&Lptr);
+    printf("\nHere is the merged list\n\n");
+    list_debug_print(Lptr);
+	
+    /*test quick sort
+    quick_sort(&Lptr);
+    printf("\nHere is the qsort list\n\n");
+    list_debug_print(Lptr);*/
+
+    list_destruct(Lptr);
+    //list_destruct(merged_list);         //... only use when merging lists
+    list_destruct(Lsortptr);              //... dont need to free these when using merged_list
+    list_destruct(Lsortptr2);             //... dont need to free these when using merged_list
+    //list_destruct(front_half);
+    //list_destruct(back_half);    
+
+
+    return 0;
+}
+
+/*
+
+Next you will want to write your own list_debug_print function to print a
+list. Then you can do "before and after" testing. That is, print the list
+before a change, and print the list after the change to verify that the change
+worked.
+
+Something like
+*/
+
+void list_debug_print(list_t *list_ptr) {
+    list_node_t *L;
+    int count;
+
+    printf("list size: %d\n", list_ptr->ll_entries);
+    L = list_ptr->ll_head;
+    count = 0;
+    while(L != NULL) {
+        printf("Pos: %d contains ID: %d\n", count, L->data_ptr->socket_id);
+        L = L->ll_next;
+        count++;
+    }
+    if (count != list_ptr->ll_entries)
+        printf("\nERROR: the list size is wrong! count is %d\n", count);
+}
+
